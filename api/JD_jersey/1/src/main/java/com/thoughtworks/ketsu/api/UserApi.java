@@ -11,7 +11,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 /**
  * Created by zyongliu on 22/11/16.
@@ -27,12 +26,7 @@ public class UserApi {
     @Produces(MediaType.APPLICATION_JSON)
     public User getUser(@Context Users users,
                         @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
-        if (current.isPresent() && current.get().equals(user)) {
-            return user;
-        } else {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        return currentUser.getCurrentUser().filter(c -> c.equals(user)).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("orders")

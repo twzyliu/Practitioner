@@ -9,7 +9,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 /**
  * Created by zyongliu on 23/11/16.
@@ -27,12 +26,7 @@ public class RefundOrderApi {
     @Produces(MediaType.APPLICATION_JSON)
     public RefundOrder getRefundOrder(@Context Users users,
                                       @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
-        if (current.isPresent() && current.get().equals(user)) {
-            return refundOrder;
-        } else {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        return currentUser.getCurrentUser().filter((c) -> c.equals(user)).map((c) -> refundOrder).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("refund")
@@ -40,13 +34,7 @@ public class RefundOrderApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Refund getRefund(@Context RefundOrders refundOrders,
                             @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
-        Refund refund = refundOrders.getRefund();
-        if (refund != null && current.isPresent() && current.get().equals(user)) {
-            return refund;
-        } else {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        return currentUser.getCurrentUser().filter((c) -> (c.equals(user) && (refundOrders.getRefund() != null))).map((c)-> refundOrders.getRefund()).orElseThrow(()-> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }
 

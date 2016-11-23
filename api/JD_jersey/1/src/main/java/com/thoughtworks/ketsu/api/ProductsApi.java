@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by zyongliu on 23/11/16.
@@ -30,24 +29,14 @@ public class ProductsApi {
                            @Context Products products,
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
         Product product = products.create(productInfo);
-        if (product != null && current.isPresent() && current.get().equals(user)) {
-            return Response.status(201).location(routes.productUrl(user, product)).build();
-        } else {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (product != null))).map((c) -> Response.status(201).location(routes.productUrl(user, product)).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Product> getAllProducts(@Context Products products) {
-        List<Product> productList = products.findAllProducts();
-        if (productList.size() == 0) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } else {
-            return productList;
-        }
+        return products.findAllProducts().stream().findFirst().map((p) -> products.findAllProducts()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("{pid}")

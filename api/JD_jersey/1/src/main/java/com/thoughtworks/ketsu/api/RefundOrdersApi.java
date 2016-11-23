@@ -1,7 +1,10 @@
 package com.thoughtworks.ketsu.api;
 
 import com.thoughtworks.ketsu.api.jersey.Routes;
-import com.thoughtworks.ketsu.domain.*;
+import com.thoughtworks.ketsu.domain.CurrentUser;
+import com.thoughtworks.ketsu.domain.RefundOrder;
+import com.thoughtworks.ketsu.domain.RefundOrders;
+import com.thoughtworks.ketsu.domain.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -10,7 +13,6 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by zyongliu on 23/11/16.
@@ -28,26 +30,15 @@ public class RefundOrdersApi {
                            @Context RefundOrders refundOrders,
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
         RefundOrder refundOrder = refundOrders.create(refundOrderInfo);
-        if (refundOrder != null && current.isPresent() && current.get().equals(user)) {
-            return Response.status(201).location(URI.create(routes.refundOrderUrl(user, refundOrder).toString())).build();
-        } else {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrder != null))).map((c) -> Response.status(201).location(URI.create(routes.refundOrderUrl(user, refundOrder).toString())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<RefundOrder> getByUidRoid(@Context RefundOrders refundOrders,
                                           @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
-        List<RefundOrder> refundOrderList = refundOrders.findAllRefundOrder();
-        if (refundOrderList.size() == 0 || !current.isPresent() || !current.get().equals(user)) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } else {
-            return refundOrderList;
-        }
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrders.findAllRefundOrder().size() > 0))).map((c) -> refundOrders.findAllRefundOrder()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("{roid}")

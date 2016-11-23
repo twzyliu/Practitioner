@@ -9,7 +9,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 /**
  * Created by zyongliu on 23/11/16.
@@ -27,12 +26,7 @@ public class OrderApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Order findByUidOid(@Context Users users,
                               @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
-        if (current.isPresent() && current.get().equals(user)) {
-            return order;
-        } else {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        return currentUser.getCurrentUser().filter(c -> c.equals(user)).map(c -> order).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("payment")
@@ -41,13 +35,6 @@ public class OrderApi {
     public Payment getPayment(@Context Users users,
                               @Context CurrentUser currentUser,
                               @Context Orders orders) {
-        Optional<User> current = currentUser.getCurrentUser();
-        Payment payment = orders.getPayment();
-        if (payment != null && current.isPresent() && current.get().equals(user)) {
-            return payment;
-        } else {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (orders.getPayment() != null))).map(c -> orders.getPayment()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
-
 }

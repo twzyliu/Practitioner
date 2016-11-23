@@ -31,35 +31,21 @@ public class OrdersApi {
                                 @Context Orders orders,
                                 @Context Routes routes,
                                 @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
-        if (!current.isPresent() || !current.get().equals(user)) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
         Optional<Order> order = orders.createOrder(user, orderInfo);
-        if (order.isPresent()) {
-            return Response.status(201).location(routes.orderUrl(user, order)).build();
-        } else {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
+        currentUser.getCurrentUser().filter((c) -> (c.equals(user))).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return order.filter((o) -> o != null).map((o) -> Response.status(201).location(routes.orderUrl(user, order)).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
     }
 
     @Path("{oid}")
     public OrderApi orderApi(@PathParam("oid") long oid,
                              @Context Orders orders) {
-        return orders.findByUidOid(user.getUsername(), oid).map((u)->new OrderApi(u,user)).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return orders.findByUidOid(user.getUsername(), oid).map((u) -> new OrderApi(u, user)).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getOrders(@Context Orders orders,
                                  @Context CurrentUser currentUser) {
-        Optional<User> current = currentUser.getCurrentUser();
-        List<Order> orderList = orders.findAllByUid(user.getUsername());
-        if (orderList.size() == 0 || !current.isPresent() || !current.get().equals(user)) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } else {
-            return orderList;
-        }
+        return currentUser.getCurrentUser().filter((c) -> (c.equals(user) && (orders.findAllByUid(user.getUsername()).size() > 0))).map((c) -> orders.findAllByUid(user.getUsername())).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
-
 }
