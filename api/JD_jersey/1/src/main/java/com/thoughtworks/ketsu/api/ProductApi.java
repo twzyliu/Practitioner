@@ -1,7 +1,6 @@
 package com.thoughtworks.ketsu.api;
 
 import com.thoughtworks.ketsu.domain.Product;
-import com.thoughtworks.ketsu.domain.User;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
@@ -13,11 +12,9 @@ import javax.ws.rs.core.MediaType;
 public class ProductApi {
 
     private Product product;
-    private User user;
 
-    public ProductApi(Product product, User user) {
+    public ProductApi(Product product) {
         this.product = product;
-        this.user = user;
     }
 
     @GET

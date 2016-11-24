@@ -15,18 +15,16 @@ import javax.ws.rs.core.Response;
  */
 public class OrderApi {
     private Order order;
-    private User user;
 
-    public OrderApi(Order order, User user) {
+    public OrderApi(Order order) {
         this.order = order;
-        this.user = user;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Order findByUidOid(@Context Users users,
                               @Context CurrentUser currentUser) {
-        return currentUser.getCurrentUser().filter(c -> c.equals(user)).map(c -> order).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter(c -> c.equals(order.getUser())).map(c -> order).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("payment")
@@ -35,6 +33,6 @@ public class OrderApi {
     public Payment getPayment(@Context Users users,
                               @Context CurrentUser currentUser,
                               @Context Orders orders) {
-        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (orders.getPayment() != null))).map(c -> orders.getPayment()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter(c -> (c.equals(order.getUser()) && (orders.getPayment() != null))).map(c -> orders.getPayment()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }

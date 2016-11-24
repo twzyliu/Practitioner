@@ -31,7 +31,7 @@ public class RefundOrdersApi {
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
         RefundOrder refundOrder = refundOrders.create(refundOrderInfo);
-        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrder != null))).map((c) -> Response.status(201).location(URI.create(routes.refundOrderUrl(user, refundOrder).toString())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrder != null))).map((c) -> Response.status(201).location(URI.create(routes.refundOrderUrl(refundOrder).toString())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
@@ -44,6 +44,6 @@ public class RefundOrdersApi {
     @Path("{roid}")
     public RefundOrderApi refundOrderApi(@PathParam("roid") long roid,
                                          @Context RefundOrders refundOrders) {
-        return refundOrders.findByUidRoid(user.getUsername(), roid).map((u) -> new RefundOrderApi(u, user)).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return refundOrders.findByUidRoid(user.getUsername(), roid).map(RefundOrderApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }

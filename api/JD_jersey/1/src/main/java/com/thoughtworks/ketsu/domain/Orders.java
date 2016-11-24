@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * Created by zyongliu on 23/11/16.
  */
-public interface Orders {
+public interface    Orders {
     Optional<Order> createOrder(User user, HashMap<String, Object> orderInfo);
 
     Optional<Order> findByUidOid(String uid, long oid);

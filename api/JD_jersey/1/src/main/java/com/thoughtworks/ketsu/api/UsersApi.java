@@ -22,7 +22,7 @@ public class UsersApi {
                            @Context Users users,
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
-        return users.create(username).map(u -> Response.status(201).location(routes.userUrl(Optional.of(u))).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
+        return users.create(username).map(u -> Response.status(201).location(routes.userUrl(Optional.of(u).get())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
     }
 
     @Path("{uid}")

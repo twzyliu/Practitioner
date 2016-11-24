@@ -12,6 +12,7 @@ import org.junit.Test;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
@@ -75,6 +76,9 @@ public class UserApiTest extends JerseyTest {
         Response response = target("/users/" + USERNAME_A).request().get();
 
         assertThat(response.getStatus(), is(200));
+        Map<String, Object> map = response.readEntity(Map.class);
+        assertThat(map.getOrDefault("username",""), is(user.getUsername()));
+        assertThat(map.getOrDefault("url","").toString().contains(user.getUsername()), is(true));
     }
 
     @Test

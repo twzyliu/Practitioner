@@ -1,13 +1,9 @@
 package com.thoughtworks.ketsu.api.jersey;
 
-import com.thoughtworks.ketsu.domain.Order;
-import com.thoughtworks.ketsu.domain.Product;
-import com.thoughtworks.ketsu.domain.RefundOrder;
-import com.thoughtworks.ketsu.domain.User;
+import com.thoughtworks.ketsu.domain.*;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
-import java.util.Optional;
 
 public class Routes {
 
@@ -17,19 +13,27 @@ public class Routes {
         baseUri = uriInfo.getBaseUri().toASCIIString();
     }
 
-    public URI userUrl(Optional<User> user) {
-        return URI.create(String.format("%susers/%s",baseUri,user.get().getUsername()));
+    public URI userUrl(User user) {
+        return URI.create(String.format("%susers/%s", baseUri, user.getUsername()));
     }
 
-    public URI orderUrl(User user, Optional<Order> order) {
-        return URI.create(String.format("%susers/%s/orders/%s",baseUri,user.getUsername(),order.get().getId()));
+    public URI orderUrl(Order order) {
+        return URI.create(String.format("%susers/%s/orders/%s", baseUri, order.getUser().getUsername(), order.getId()));
     }
 
-    public URI refundOrderUrl(User user, RefundOrder refundOrder) {
-        return URI.create(String.format("%susers/%s/orders/%s",baseUri,user.getUsername(),refundOrder.getId()));
+    public URI refundOrderUrl(RefundOrder refundOrder) {
+        return URI.create(String.format("%susers/%s/refundorders/%s", baseUri, refundOrder.getUser().getUsername(), refundOrder.getId()));
     }
 
-    public URI productUrl(User user, Product product) {
-        return URI.create(String.format("%susers/%s/products/%s",baseUri,user.getUsername(),product.getId()));
+    public URI productUrl(Product product) {
+        return URI.create(String.format("%susers/%s/products/%s", baseUri, product.getUser().getUsername(), product.getId()));
+    }
+
+    public URI paymentUrl(Payment payment) {
+        return URI.create(String.format("%susers/%s/orders/%s/payment", baseUri, payment.getOrder().getUser().getUsername(), payment.getOrder().getId()));
+    }
+
+    public URI refundUrl(Refund refund) {
+        return URI.create(String.format("%susers/%s/refundorders/%s/refund", baseUri, refund.getRefundOrder().getUser().getUsername(), refund.getRefundOrder().getId()));
     }
 }

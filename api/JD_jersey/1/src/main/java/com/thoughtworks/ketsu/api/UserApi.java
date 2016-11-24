@@ -34,7 +34,7 @@ public class UserApi {
         return new OrdersApi(user);
     }
 
-    @Path("refundOrders")
+    @Path("refundorders")
     public RefundOrdersApi refundOrdersApi() {
         return new RefundOrdersApi(user);
     }

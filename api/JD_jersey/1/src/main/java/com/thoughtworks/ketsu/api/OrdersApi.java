@@ -18,7 +18,6 @@ import java.util.Optional;
  * Created by zyongliu on 23/11/16.
  */
 public class OrdersApi {
-
     private User user;
 
     public OrdersApi(User user) {
@@ -33,13 +32,13 @@ public class OrdersApi {
                                 @Context CurrentUser currentUser) {
         Optional<Order> order = orders.createOrder(user, orderInfo);
         currentUser.getCurrentUser().filter((c) -> (c.equals(user))).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
-        return order.filter((o) -> o != null).map((o) -> Response.status(201).location(routes.orderUrl(user, order)).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
+        return order.filter((o) -> o != null).map((o) -> Response.status(201).location(routes.orderUrl(order.get())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
     }
 
     @Path("{oid}")
     public OrderApi orderApi(@PathParam("oid") long oid,
                              @Context Orders orders) {
-        return orders.findByUidOid(user.getUsername(), oid).map((u) -> new OrderApi(u, user)).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return orders.findByUidOid(user.getUsername(), oid).map(OrderApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET

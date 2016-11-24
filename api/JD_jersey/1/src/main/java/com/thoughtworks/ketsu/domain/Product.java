@@ -11,13 +11,19 @@ import java.util.Map;
  */
 public class Product implements Record{
     private long id;
+    private User user;
 
-    public Product(long id) {
+    public Product(long id, User user) {
         this.id = id;
+        this.user = user;
     }
 
     public long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override
@@ -27,6 +33,9 @@ public class Product implements Record{
 
     @Override
     public Map<String, Object> toJson(Routes routes) {
-        return new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("url", routes.productUrl(this));
+        return map;
     }
 }

@@ -30,7 +30,7 @@ public class ProductsApi {
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
         Product product = products.create(productInfo);
-        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (product != null))).map((c) -> Response.status(201).location(routes.productUrl(user, product)).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (product != null))).map((c) -> Response.status(201).location(routes.productUrl(product)).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
@@ -42,6 +42,6 @@ public class ProductsApi {
     @Path("{pid}")
     public ProductApi productApi(@PathParam("pid") long pid,
                                  @Context Products products) {
-        return products.findProduct(pid).map((u) -> new ProductApi(u, user)).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return products.findProduct(pid).map(ProductApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }

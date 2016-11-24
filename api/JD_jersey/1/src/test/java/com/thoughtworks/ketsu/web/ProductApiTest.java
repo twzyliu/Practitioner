@@ -13,10 +13,12 @@ import org.junit.Test;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
-import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
@@ -89,11 +91,17 @@ public class ProductApiTest extends JerseyTest {
         Response response = target(String.format("/users/%s/products", user.getUsername())).request().get();
 
         assertThat(response.getStatus(), is(200));
+        List<Map<String, Object>> maps = response.readEntity(List.class);
+        assertThat(maps.size(), is(productList.size()));
+        for (int i = 0;i<productList.size();i++) {
+            assertThat(maps.get(i).getOrDefault("id","").toString(), is(productList.get(i).getId()+""));
+            assertThat(maps.get(i).getOrDefault("url","").toString().contains(productList.get(i).getId()+""), is(true));
+        }
     }
 
     @Test
     public void should_return_404_when_user_no_products() throws Exception {
-        when(products.findAllProducts()).thenReturn(asList());
+        when(products.findAllProducts()).thenReturn(Collections.emptyList());
         Response response = target(String.format("/users/%s/products", user.getUsername())).request().get();
 
         assertThat(response.getStatus(), is(404));
@@ -104,6 +112,9 @@ public class ProductApiTest extends JerseyTest {
         Response response = target(String.format("/users/%s/products/%s", user.getUsername(),product.getId())).request().get();
 
         assertThat(response.getStatus(), is(200));
+        Map<String, Object> map = response.readEntity(Map.class);
+        assertThat(map.getOrDefault("id", "").toString(), is(product.getId() + ""));
+        assertThat(map.getOrDefault("url","").toString().contains(product.getId()+""), is(true));
     }
 
     @Test
