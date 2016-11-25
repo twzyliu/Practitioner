@@ -22,15 +22,14 @@ public class CmdTest {
 
     private Player player;
     private Cmd cmd;
-    private CmdType cmdType;
     private Cmd initMoneyCmd;
     private CmdType initMoneyCmdType;
 
     @Before
     public void setUp() throws Exception {
-        cmdType = mock(CmdType.class);
+        CmdType cmdType = mock(CmdType.class);
         cmd = mock(Cmd.class);
-        player = new Player(mock(GameMap.class),cmdType);
+        player = new Player(mock(GameMap.class), cmdType);
         when(cmdType.parse(TestHelper.RICH_CMD)).thenReturn(Optional.of(cmd));
         initMoneyCmdType = mock(CmdType.class);
         initMoneyCmd = mock(Cmd.class);

@@ -1,6 +1,7 @@
 package cmdType.roll;
 
 import cmd.Cmd;
+import cmd.roll.NoToBuy;
 import cmdType.CmdType;
 
 import java.util.Optional;
@@ -11,6 +12,10 @@ import java.util.Optional;
 public class NoToBuyType implements CmdType {
     @Override
     public Optional<Cmd> parse(String cmd) {
-        return null;
+        if (cmd.equals(NO)) {
+            return Optional.of(new NoToBuy());
+        } else {
+            return null;
+        }
     }
 }

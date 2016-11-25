@@ -20,18 +20,15 @@ import static org.mockito.Mockito.when;
  */
 public class RollCmdEmptyLandTest {
 
-    private RollCmdType rollCmdType;
     private Player player;
-    private Cmd yesToBuy;
-    private GameMap gameMap;
+    private EmptyLand emptyLand;
 
     @Before
     public void setUp() throws Exception {
-        gameMap = mock(GameMap.class);
-        rollCmdType = new RollCmdType();
+        GameMap gameMap = mock(GameMap.class);
+        RollCmdType rollCmdType = new RollCmdType();
         player = new Player(gameMap, rollCmdType);
-        yesToBuy = new YesToBuy();
-        EmptyLand emptyLand = new EmptyLand();
+        emptyLand = new EmptyLand(TestHelper.LAND_PRICE);
         when(gameMap.getPlace(anyInt())).thenReturn(emptyLand);
     }
 
@@ -41,6 +38,22 @@ public class RollCmdEmptyLandTest {
         player.execute(cmd);
         Optional<Cmd> yes = player.getAvailableCmd(TestHelper.YES);
 
-        assertThat(yes.get(), is(yesToBuy));
+        assertThat(yes.get() instanceof YesToBuy, is(true));
+    }
+
+    @Test
+    public void should_change_money_and_add_land_and_change_land_owner_after_have_enough_money_to_sayYes() throws Exception {
+        player.setMoney(TestHelper.ENOUGH_MONEY);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        Optional<Cmd> yes = player.getAvailableCmd(TestHelper.YES);
+        int money = player.getMoney();
+        int landsNum = player.getLands().size();
+
+        player.execute(yes);
+
+        assertThat(player.getMoney(), is(money - emptyLand.getPrice()));
+        assertThat(player.getLands().size(), is(landsNum + 1));
+        assertThat(emptyLand.getOwner(), is(player));
     }
 }
