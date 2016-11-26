@@ -22,6 +22,7 @@ public class Player {
     private int point = 0;
     private List<Place> lands = new ArrayList<>();
     private int godDays = 0;
+    private boolean isGameOver = false;
 
     public Player(GameMap gameMap, List<CmdType> cmdTypes) {
         this.initialCmdType = cmdTypes;
@@ -64,6 +65,9 @@ public class Player {
     }
 
     public void setMoney(int money) {
+        if (money < 0) {
+            isGameOver = true;
+        }
         this.money = money;
     }
 
@@ -86,4 +90,9 @@ public class Player {
     public void setGodDays(int godDays) {
         this.godDays = godDays;
     }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
 }
