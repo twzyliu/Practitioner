@@ -10,6 +10,7 @@ import place.EmptyLand;
 import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -55,5 +56,20 @@ public class RollCmdEmptyLandTest {
         assertThat(player.getMoney(), is(money - emptyLand.getPrice()));
         assertThat(player.getLands().size(), is(landsNum + 1));
         assertThat(emptyLand.getOwner(), is(player));
+    }
+
+    @Test
+    public void should_not_change_when_no_enough_money_to_sayYes() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        Optional<Cmd> yes = player.getAvailableCmd(TestHelper.YES);
+        int money = player.getMoney();
+        int landsNum = player.getLands().size();
+
+        player.execute(yes);
+
+        assertThat(player.getMoney(), is(money));
+        assertThat(player.getLands().size(), is(landsNum));
+        assertNull(emptyLand.getOwner());
     }
 }
