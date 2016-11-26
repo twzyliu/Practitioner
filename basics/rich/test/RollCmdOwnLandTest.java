@@ -68,4 +68,20 @@ public class RollCmdOwnLandTest {
         assertThat(player.getMoney(), is(money));
         assertThat(emptyLand.getLevel(), is(level));
     }
+
+    @Test
+    public void should_not_change_when_land_level_is_maxlevel_to_sayYes() throws Exception {
+        player.setMoney(TestHelper.ENOUGH_MONEY);
+        emptyLand.setLevel(EmptyLand.MAX_LEVEL);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        Optional<Cmd> yes = player.getAvailableCmd(TestHelper.YES);
+        int money = player.getMoney();
+        int level = emptyLand.getLevel();
+
+        player.execute(yes);
+
+        assertThat(player.getMoney(), is(money));
+        assertThat(emptyLand.getLevel(), is(level));
+    }
 }

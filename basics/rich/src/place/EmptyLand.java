@@ -15,6 +15,7 @@ import static java.util.Arrays.asList;
  * Created by zyongliu on 25/11/16.
  */
 public class EmptyLand extends Place {
+    public static final int MAX_LEVEL = 3;
     private Player owner = null;
     private int price;
     private int level = 0;

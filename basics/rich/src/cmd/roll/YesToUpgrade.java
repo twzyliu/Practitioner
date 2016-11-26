@@ -17,7 +17,7 @@ public class YesToUpgrade implements Cmd {
         int money = player.getMoney();
         int price = emptyLand.getPrice();
         int level = emptyLand.getLevel();
-        if (money >= price) {
+        if (money >= price && level < EmptyLand.MAX_LEVEL) {
             player.setMoney(money - price);
             emptyLand.setLevel(level + 1);
         }
