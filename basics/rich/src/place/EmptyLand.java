@@ -2,7 +2,9 @@ package place;
 
 import cmdType.CmdType;
 import cmdType.roll.NoToBuyType;
+import cmdType.roll.NoToUpgradeType;
 import cmdType.roll.YesToBuyType;
+import cmdType.roll.YesToUpgradeType;
 import core.Player;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class EmptyLand extends Place {
     public List<CmdType> getAvailableCmd(Player player, List<CmdType> initialCmdType) {
         if (getOwner() == null) {
             return asList(new YesToBuyType(), new NoToBuyType());
+        } else if (player.equals(getOwner())) {
+            return asList(new YesToUpgradeType(), new NoToUpgradeType());
         } else {
             return initialCmdType;
         }
