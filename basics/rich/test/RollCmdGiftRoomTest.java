@@ -75,4 +75,16 @@ public class RollCmdGiftRoomTest {
 
         assertThat(player.getGodDays(), is(giftRoom.getGiftGodDays()));
     }
+
+    @Test
+    public void should_change_available_cmds_after_chose_or_wrong_cmd() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+
+        Optional<Cmd> wrongCmd = player.getAvailableCmd(TestHelper.WRONG_CMD);
+        player.execute(wrongCmd);
+
+        assertThat(player.getAvailableCmdType() != availableCmdType, is(true));
+    }
 }
