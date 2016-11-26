@@ -64,4 +64,15 @@ public class RollCmdGiftRoomTest {
 
         assertThat(player.getPoint(), is(point + giftRoom.getGiftPoint()));
     }
+
+    @Test
+    public void should_get_god_when_chose_three() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+
+        Optional<Cmd> choseThree = player.getAvailableCmd(TestHelper.CHOSE_THREE);
+        player.execute(choseThree);
+
+        assertThat(player.getGodDays(), is(giftRoom.getGiftGodDays()));
+    }
 }

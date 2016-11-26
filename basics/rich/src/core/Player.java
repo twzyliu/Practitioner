@@ -21,6 +21,7 @@ public class Player {
     private int money = 0;
     private int point = 0;
     private List<Place> lands = new ArrayList<>();
+    private int godDays = 0;
 
     public Player(GameMap gameMap, List<CmdType> cmdTypes) {
         this.initialCmdType = cmdTypes;
@@ -76,5 +77,13 @@ public class Player {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public int getGodDays() {
+        return godDays;
+    }
+
+    public void setGodDays(int godDays) {
+        this.godDays = godDays;
     }
 }
