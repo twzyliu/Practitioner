@@ -12,10 +12,10 @@ import java.util.Optional;
 public class NoToBuyType implements CmdType {
     @Override
     public Optional<Cmd> parse(String cmd) {
-        if (cmd.equals(NO)) {
+        if (cmd.toLowerCase().equals(NO)) {
             return Optional.of(new NoToBuy());
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 }

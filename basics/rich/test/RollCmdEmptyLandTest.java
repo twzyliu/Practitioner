@@ -1,14 +1,16 @@
 import cmd.Cmd;
 import cmd.roll.YesToBuy;
-import cmdType.roll.RollCmdType;
+import cmdType.CmdType;
 import core.GameMap;
 import core.Player;
 import org.junit.Before;
 import org.junit.Test;
 import place.EmptyLand;
 
+import java.util.List;
 import java.util.Optional;
 
+import static cmdType.CmdType.CMD_TYPES;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -27,8 +29,7 @@ public class RollCmdEmptyLandTest {
     @Before
     public void setUp() throws Exception {
         GameMap gameMap = mock(GameMap.class);
-        RollCmdType rollCmdType = new RollCmdType();
-        player = new Player(gameMap, rollCmdType);
+        player = new Player(gameMap, CMD_TYPES);
         emptyLand = new EmptyLand(TestHelper.LAND_PRICE);
         when(gameMap.getPlace(anyInt())).thenReturn(emptyLand);
     }
@@ -71,5 +72,18 @@ public class RollCmdEmptyLandTest {
         assertThat(player.getMoney(), is(money));
         assertThat(player.getLands().size(), is(landsNum));
         assertNull(emptyLand.getOwner());
+    }
+
+    @Test
+    public void should_change_available_cmds_after_say_yes_or_no() throws Exception {
+        player.setMoney(TestHelper.ENOUGH_MONEY);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        Optional<Cmd> no = player.getAvailableCmd(TestHelper.NO);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+
+        player.execute(no);
+
+        assertThat(player.getAvailableCmdType() != availableCmdType, is(true));
     }
 }

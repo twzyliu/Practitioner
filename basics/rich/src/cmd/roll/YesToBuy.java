@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class YesToBuy implements Cmd {
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmd) {
+    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
         EmptyLand emptyLand = (EmptyLand) player.getPlace();
         int money = player.getMoney();
         int price = emptyLand.getPrice();
@@ -21,6 +21,6 @@ public class YesToBuy implements Cmd {
             player.getLands().add(emptyLand);
             emptyLand.setOwner(player);
         }
-        return null;
+        return initialCmdType;
     }
 }

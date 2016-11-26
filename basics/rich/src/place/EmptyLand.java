@@ -21,11 +21,11 @@ public class EmptyLand extends Place {
     }
 
     @Override
-    public List<CmdType> getAvailableCmd(Player player, List<CmdType> initialCmd) {
+    public List<CmdType> getAvailableCmd(Player player, List<CmdType> initialCmdType) {
         if (getOwner() == null) {
             return asList(new YesToBuyType(), new NoToBuyType());
         } else {
-            return initialCmd;
+            return initialCmdType;
         }
     }
 

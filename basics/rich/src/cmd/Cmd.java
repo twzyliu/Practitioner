@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface Cmd {
 
-    public List<CmdType> execute(Player player, List<CmdType> initialCmd);
+    List<CmdType> execute(Player player, List<CmdType> initialCmdType);
 
 }

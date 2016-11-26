@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Arrays.asList;
-
 /**
  * Created by zyongliu on 25/11/16.
  */
@@ -22,8 +20,8 @@ public class Player {
     private int money = 0;
     private List<Place> lands = new ArrayList<>();
 
-    public Player(GameMap gameMap, CmdType... cmdTypes) {
-        this.initialCmdType = asList(cmdTypes);
+    public Player(GameMap gameMap, List<CmdType> cmdTypes) {
+        this.initialCmdType = cmdTypes;
         this.availableCmdType = this.initialCmdType;
         this.gameMap = gameMap;
     }
@@ -34,6 +32,10 @@ public class Player {
 
     public void execute(Optional<Cmd> cmd) {
         this.availableCmdType = cmd.get().execute(this, initialCmdType);
+    }
+
+    public List<CmdType> getAvailableCmdType() {
+        return availableCmdType;
     }
 
     public GameMap getGameMap() {

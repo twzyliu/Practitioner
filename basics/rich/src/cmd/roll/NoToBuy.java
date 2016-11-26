@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class NoToBuy implements Cmd {
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmd) {
-        return null;
+    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
+        return initialCmdType;
     }
 }

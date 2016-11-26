@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Place {
 
-    public List<CmdType> getAvailableCmd(Player player, List<CmdType> initialCmd) {
-        return initialCmd;
+    public List<CmdType> getAvailableCmd(Player player, List<CmdType> initialCmdType) {
+        return initialCmdType;
     }
 }

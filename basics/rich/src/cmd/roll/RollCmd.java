@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class RollCmd implements Cmd {
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmd) {
+    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
         Place place = player.move();
-        return place.getAvailableCmd(player, initialCmd);
+        return place.getAvailableCmd(player, initialCmdType);
     }
 }

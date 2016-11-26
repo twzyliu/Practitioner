@@ -15,10 +15,10 @@ public class RollCmdType implements CmdType {
 
     @Override
     public Optional<Cmd> parse(String cmd) {
-        if (cmd.equals(ROLL_CMD)) {
+        if (cmd.toLowerCase().equals(ROLL_CMD)) {
             return Optional.of(new RollCmd());
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 }
