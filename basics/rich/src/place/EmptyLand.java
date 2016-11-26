@@ -9,6 +9,7 @@ import core.Player;
 
 import java.util.List;
 
+import static java.lang.Math.pow;
 import static java.util.Arrays.asList;
 
 /**
@@ -31,6 +32,8 @@ public class EmptyLand extends Place {
         } else if (player.equals(getOwner())) {
             return asList(new YesToUpgradeType(), new NoToUpgradeType());
         } else {
+            player.setMoney(player.getMoney() - getBill());
+            getOwner().setMoney(getOwner().getMoney() + getBill());
             return initialCmdType;
         }
     }
@@ -53,5 +56,9 @@ public class EmptyLand extends Place {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getBill() {
+        return (int) ((getPrice() / 2) * pow(2, level));
     }
 }
