@@ -17,6 +17,7 @@ import static java.util.Arrays.asList;
 public class EmptyLand extends Place {
     private Player owner = null;
     private int price;
+    private int level = 0;
 
     public EmptyLand(int price) {
         this.price = price;
@@ -43,5 +44,13 @@ public class EmptyLand extends Place {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }
