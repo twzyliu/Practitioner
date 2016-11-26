@@ -9,4 +9,5 @@ public class TestHelper {
     public static final String NO = "N";
     public static final int ENOUGH_MONEY = 99999;
     public static final int LAND_PRICE = 200;
+    public static final String WRONG_CMD = "wrong_cmd";
 }

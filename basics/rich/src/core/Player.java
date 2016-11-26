@@ -1,6 +1,7 @@
 package core;
 
 import cmd.Cmd;
+import cmd.WrongCmd;
 import cmdType.CmdType;
 import place.Place;
 
@@ -27,11 +28,16 @@ public class Player {
     }
 
     public Optional<Cmd> getAvailableCmd(String cmd) {
-        return availableCmdType.stream().map(cmdType -> cmdType.parse(cmd)).filter(Optional::isPresent).findFirst().get();
+        try {
+            return availableCmdType.stream().map(cmdType -> cmdType.parse(cmd)).filter(Optional::isPresent).findFirst().get();
+        } catch (Exception e) {
+            return Optional.of(new WrongCmd());
+        }
     }
 
     public void execute(Optional<Cmd> cmd) {
-        this.availableCmdType = cmd.get().execute(this, initialCmdType);
+        List<CmdType> execute = cmd.get().execute(this, initialCmdType);
+        this.availableCmdType = execute.size() > 0 ? execute : this.availableCmdType;
     }
 
     public List<CmdType> getAvailableCmdType() {

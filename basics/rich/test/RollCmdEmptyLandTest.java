@@ -86,4 +86,17 @@ public class RollCmdEmptyLandTest {
 
         assertThat(player.getAvailableCmdType() != availableCmdType, is(true));
     }
+
+    @Test
+    public void should_not_change_available_cmds_after_wrong_cmd() throws Exception {
+        player.setMoney(TestHelper.ENOUGH_MONEY);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        Optional<Cmd> wrongCmd = player.getAvailableCmd(TestHelper.WRONG_CMD);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+
+        player.execute(wrongCmd);
+
+        assertThat(player.getAvailableCmdType(), is(availableCmdType));
+    }
 }
