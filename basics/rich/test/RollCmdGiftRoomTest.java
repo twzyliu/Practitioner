@@ -52,4 +52,16 @@ public class RollCmdGiftRoomTest {
 
         assertThat(player.getMoney(), is(money + giftRoom.getGiftMoney()));
     }
+
+    @Test
+    public void should_change_point_when_chose_two() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        int point = player.getPoint();
+
+        Optional<Cmd> choseTwo = player.getAvailableCmd(TestHelper.CHOSE_TWO);
+        player.execute(choseTwo);
+
+        assertThat(player.getPoint(), is(point + giftRoom.getGiftPoint()));
+    }
 }

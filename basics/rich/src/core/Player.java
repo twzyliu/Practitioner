@@ -19,6 +19,7 @@ public class Player {
     private GameMap gameMap;
     private int position = 0;
     private int money = 0;
+    private int point = 0;
     private List<Place> lands = new ArrayList<>();
 
     public Player(GameMap gameMap, List<CmdType> cmdTypes) {
@@ -67,5 +68,13 @@ public class Player {
 
     public List<Place> getLands() {
         return lands;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
     }
 }
