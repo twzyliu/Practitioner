@@ -1,11 +1,13 @@
 import cmd.Cmd;
 import cmd.roll.YesToUpgrade;
+import cmdType.CmdType;
 import core.GameMap;
 import core.Player;
 import org.junit.Before;
 import org.junit.Test;
 import place.EmptyLand;
 
+import java.util.List;
 import java.util.Optional;
 
 import static cmdType.CmdType.CMD_TYPES;
@@ -83,5 +85,17 @@ public class RollCmdOwnLandTest {
 
         assertThat(player.getMoney(), is(money));
         assertThat(emptyLand.getLevel(), is(level));
+    }
+
+    @Test
+    public void should_change_available_cmds_after_say_yes_or_no() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        Optional<Cmd> no = player.getAvailableCmd(TestHelper.NO);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+
+        player.execute(no);
+
+        assertThat(player.getAvailableCmdType() != availableCmdType, is(true));
     }
 }
