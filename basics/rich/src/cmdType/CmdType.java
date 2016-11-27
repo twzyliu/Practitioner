@@ -33,7 +33,8 @@ public interface CmdType {
             new ChoseToolThreeType(),
             new ChoseToolExitType(),
             new BlockCmdType(),
-            new BombCmdType()
+            new BombCmdType(),
+            new RobotCmdType()
     );
 
 

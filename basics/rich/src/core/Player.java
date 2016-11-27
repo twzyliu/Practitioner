@@ -127,4 +127,8 @@ public class Player {
     public Robot getRobot() {
         return robot;
     }
+
+    public int getPosition() {
+        return position;
+    }
 }
