@@ -3,6 +3,7 @@ import cmdType.CmdType;
 import core.GameMap;
 import core.Player;
 import item.Block;
+import item.Bomb;
 import item.Robot;
 import org.junit.Before;
 import org.junit.Test;
@@ -84,6 +85,22 @@ public class RollCmdToolRoomTest {
 
         assertThat(player.getPoint(), is(point - robot.getPoint()));
         assertThat(robot.getNum(), is(num + 1));
+    }
+
+    @Test
+    public void should_change_point_and_toolsnum_when_have_enough_point_to_chose_three() throws Exception {
+        player.setPoint(TestHelper.ENOUGH_POINT);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        int point = player.getPoint();
+        Bomb bomb = player.getBomb();
+        int num = bomb.getNum();
+
+        Optional<Cmd> choseThee = player.getAvailableCmd(TestHelper.CHOSE_THREE);
+        player.execute(choseThee);
+
+        assertThat(player.getPoint(), is(point - bomb.getPoint()));
+        assertThat(bomb.getNum(), is(num + 1));
     }
 }
 
