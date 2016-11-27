@@ -6,6 +6,9 @@ import cmdType.CmdType;
 
 import java.util.Optional;
 
+import static java.lang.Math.abs;
+import static java.util.Arrays.asList;
+
 /**
  * Created by zyongliu on 27/11/16.
  */
@@ -15,10 +18,13 @@ public class BlockCmdType implements CmdType {
 
     @Override
     public Optional<Cmd> parse(String cmd) {
-        if (cmd.toLowerCase().contains(BLOCK_CMD)) {
+        if (cmd.toLowerCase().contains(BLOCK_CMD) && checkCmd(cmd)) {
             return Optional.of(new BlockCmd());
-        } else {
-            return Optional.empty();
         }
+        return Optional.empty();
+    }
+
+    public boolean checkCmd(String cmd) {
+        return (asList(cmd.split(" ")).size() == 2 && abs(Integer.parseInt(asList(cmd.split(" ")).get(1))) < 11);
     }
 }
