@@ -2,6 +2,7 @@ import cmd.Cmd;
 import cmdType.CmdType;
 import core.GameMap;
 import core.Player;
+import item.Block;
 import org.junit.Before;
 import org.junit.Test;
 import place.Place;
@@ -63,5 +64,22 @@ public class BombCmdTest {
 
         assertThat(player.getToolsNum(), is(toolsNum));
         assertNull(place.getTool());
+    }
+
+    @Test
+    public void should_not_change_when_player_or_tool_on_the_target() throws Exception {
+        player.getBomb().setNum(TestHelper.ENOUGH_TOOLS);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.BOMB_CMD);
+        int toolsNum = player.getToolsNum();
+
+        place.setTool(new Block());
+        player.execute(cmd);
+        assertThat(player.getToolsNum(), is(toolsNum));
+        assertThat(place.getTool() instanceof Block, is(true));
+
+        place.setPlayer(player);
+        player.execute(cmd);
+        assertThat(player.getToolsNum(), is(toolsNum));
+        assertThat(place.getPlayer() != null, is(true));
     }
 }
