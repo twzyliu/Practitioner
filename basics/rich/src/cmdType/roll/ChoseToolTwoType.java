@@ -1,6 +1,8 @@
 package cmdType.roll;
 
 import cmd.Cmd;
+import cmd.roll.ChoseToolOne;
+import cmd.roll.ChoseToolTwo;
 import cmdType.CmdType;
 
 import java.util.Optional;
@@ -11,6 +13,10 @@ import java.util.Optional;
 public class ChoseToolTwoType implements CmdType{
     @Override
     public Optional<Cmd> parse(String cmd) {
-        return null;
+        if (cmd.toLowerCase().equals(CHOSE_TWO)) {
+            return Optional.of(new ChoseToolTwo());
+        } else {
+            return Optional.empty();
+        }
     }
 }
