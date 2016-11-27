@@ -26,7 +26,11 @@ public interface CmdType {
             new NoToUpgradeType(),
             new ChoseGiftOneType(),
             new ChoseGiftTwoType(),
-            new ChoseGiftThreeType()
+            new ChoseGiftThreeType(),
+            new ChoseToolOneType(),
+            new ChoseToolTwoType(),
+            new ChoseToolThreeType(),
+            new ChoseToolExitType()
     );
 
     Optional<Cmd> parse(String cmd);

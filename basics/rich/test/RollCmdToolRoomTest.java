@@ -40,4 +40,25 @@ public class RollCmdToolRoomTest {
 
         assertThat(player.getAvailableCmdType(), is(availableCmdType));
     }
+
+    @Test
+    public void should_return_available_cmds_after_roll_to_toolroom_and_have_enough_point() throws Exception {
+        player.setPoint(TestHelper.ENOUGH_POINT);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+
+        player.execute(cmd);
+
+        assertThat(player.getAvailableCmdType() != availableCmdType, is(true));
+    }
 }
+
+
+
+
+
+
+
+
+
+
