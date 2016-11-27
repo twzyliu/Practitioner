@@ -14,24 +14,13 @@ import static java.util.Arrays.asList;
  * Created by zyongliu on 26/11/16.
  */
 public class GiftRoom extends Place {
-    private static final int giftMoney = 2000;
-    private static final int giftPoint = 200;
-    private static final int giftGodDays = 5;
+    public static final int giftMoney = 2000;
+    public static final int giftPoint = 200;
+    public static final int giftGodDays = 5;
 
     @Override
     public List<CmdType> getAvailableCmd(Player player, List<CmdType> initialCmdType) {
         return asList(new ChoseGiftOneType(),new ChoseGiftTwoType(),new ChoseGiftThreeType());
     }
 
-    public int getGiftMoney() {
-        return giftMoney;
-    }
-
-    public int getGiftPoint() {
-        return giftPoint;
-    }
-
-    public int getGiftGodDays() {
-        return giftGodDays;
-    }
 }

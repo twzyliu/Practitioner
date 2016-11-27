@@ -14,7 +14,7 @@ public class ChoseGiftThree implements Cmd {
     @Override
     public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
         GiftRoom giftRoom = (GiftRoom) player.getPlace();
-        player.setGodDays(giftRoom.getGiftGodDays());
+        player.setGodDays(GiftRoom.giftGodDays);
         return initialCmdType;
     }
 }

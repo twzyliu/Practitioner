@@ -50,7 +50,7 @@ public class RollCmdGiftRoomTest {
         Optional<Cmd> choseOne = player.getAvailableCmd(TestHelper.CHOSE_ONE);
         player.execute(choseOne);
 
-        assertThat(player.getMoney(), is(money + giftRoom.getGiftMoney()));
+        assertThat(player.getMoney(), is(money + GiftRoom.giftMoney));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class RollCmdGiftRoomTest {
         Optional<Cmd> choseTwo = player.getAvailableCmd(TestHelper.CHOSE_TWO);
         player.execute(choseTwo);
 
-        assertThat(player.getPoint(), is(point + giftRoom.getGiftPoint()));
+        assertThat(player.getPoint(), is(point + GiftRoom.giftPoint));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class RollCmdGiftRoomTest {
         Optional<Cmd> choseThree = player.getAvailableCmd(TestHelper.CHOSE_THREE);
         player.execute(choseThree);
 
-        assertThat(player.getGodDays(), is(giftRoom.getGiftGodDays()));
+        assertThat(player.getGodDays(), is(GiftRoom.giftGodDays));
     }
 
     @Test

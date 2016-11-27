@@ -4,6 +4,7 @@ import cmd.Cmd;
 import cmd.WrongCmd;
 import cmdType.CmdType;
 import place.Place;
+import place.Prison;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Player {
     private int point = 0;
     private List<Place> lands = new ArrayList<>();
     private int godDays = 0;
+    private int prisonDays = 0;
     private boolean isGameOver = false;
 
     public Player(GameMap gameMap, List<CmdType> cmdTypes) {
@@ -95,4 +97,11 @@ public class Player {
         return isGameOver;
     }
 
+    public int getPrisonDays() {
+        return prisonDays;
+    }
+
+    public void gotoPrison() {
+        prisonDays = Prison.PRISON_DAYS;
+    }
 }

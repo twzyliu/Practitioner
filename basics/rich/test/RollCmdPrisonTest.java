@@ -40,6 +40,15 @@ public class RollCmdPrisonTest {
 
         assertThat(player.getAvailableCmdType(), is(availableCmdType));
     }
+
+    @Test
+    public void should_change_prison_days_when_roll_to_prison() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+
+        player.execute(cmd);
+
+        assertThat(player.getPrisonDays(), is(Prison.PRISON_DAYS));
+    }
 }
 
 
