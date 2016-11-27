@@ -17,11 +17,13 @@ public class Robot extends Item {
 
     @Override
     public void use(Player player) {
-        num -= 1;
-        GameMap gameMap = player.getGameMap();
-        int position = player.getPosition();
-        for (int i = 0; i < ROBOT_STEP; i++) {
-            gameMap.getPlace(position + 1 + i).setTool(null);
+        if (num > 1) {
+            num -= 1;
+            GameMap gameMap = player.getGameMap();
+            int position = player.getPosition();
+            for (int i = 0; i < ROBOT_STEP; i++) {
+                gameMap.getPlace(position + 1 + i).setTool(null);
+            }
         }
     }
 }

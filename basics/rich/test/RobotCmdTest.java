@@ -55,4 +55,15 @@ public class RobotCmdTest {
         assertThat(player.getToolsNum(), is(toolsNum - 1));
         assertNull(place.getTool());
     }
+
+    @Test
+    public void should_not_change_when_no_tool_to_use() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROBOT_CMD);
+        int toolsNum = player.getToolsNum();
+
+        player.execute(cmd);
+
+        assertThat(player.getToolsNum(), is(toolsNum));
+        assertThat(place.getTool() instanceof Bomb, is(true));
+    }
 }
