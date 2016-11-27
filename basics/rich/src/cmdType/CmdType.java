@@ -17,6 +17,7 @@ public interface CmdType {
     String CHOSE_ONE = "1";
     String CHOSE_TWO = "2";
     String CHOSE_THREE = "3";
+    String EXIT = "f";
 
     List<CmdType> CMD_TYPES = asList(
             new RollCmdType(),

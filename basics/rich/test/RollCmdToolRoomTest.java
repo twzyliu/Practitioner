@@ -125,6 +125,32 @@ public class RollCmdToolRoomTest {
         assertThat(player.getAvailableCmdType(), is(availableCmdType));
         assertThat(player.getPoint(), is(point));
     }
+
+    @Test
+    public void should_not_change_available_cmds_after_chose_or_wrong_cmd() throws Exception {
+        player.setPoint(TestHelper.ENOUGH_POINT);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+
+        Optional<Cmd> wrongCmd = player.getAvailableCmd(TestHelper.WRONG_CMD);
+        player.execute(wrongCmd);
+
+        assertThat(player.getAvailableCmdType(), is(availableCmdType));
+    }
+
+    @Test
+    public void should_change_available_cmds_after_chose_exit_cmd() throws Exception {
+        player.setPoint(TestHelper.ENOUGH_POINT);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+
+        Optional<Cmd> exitCmd = player.getAvailableCmd(TestHelper.EXIT_CMD);
+        player.execute(exitCmd);
+
+        assertThat(player.getAvailableCmdType() != availableCmdType, is(true));
+    }
 }
 
 

@@ -1,6 +1,8 @@
 package cmdType.roll;
 
 import cmd.Cmd;
+import cmd.roll.ChoseToolExit;
+import cmd.roll.ChoseToolThree;
 import cmdType.CmdType;
 
 import java.util.Optional;
@@ -11,6 +13,10 @@ import java.util.Optional;
 public class ChoseToolExitType implements CmdType{
     @Override
     public Optional<Cmd> parse(String cmd) {
-        return null;
+        if (cmd.toLowerCase().equals(EXIT)) {
+            return Optional.of(new ChoseToolExit());
+        } else {
+            return Optional.empty();
+        }
     }
 }
