@@ -1,6 +1,7 @@
 package item;
 
 import core.Player;
+import place.Place;
 
 /**
  * Created by zyongliu on 27/11/16.
@@ -26,9 +27,10 @@ public class Item {
     }
 
     public void use(Player player) {
-        if (num > 1) {
+        Place place = player.getPlace();
+        if (num > 1 && place.getPlayer() == null && place.getTool() == null) {
             num -= 1;
-            player.getPlace().setTool(this);
+            place.setTool(this);
         }
     }
 }

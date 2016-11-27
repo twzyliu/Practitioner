@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Place {
     private Item tool;
+    private Player player;
 
     public List<CmdType> getAvailableCmd(Player player, List<CmdType> initialCmdType) {
         return initialCmdType;
@@ -22,5 +23,13 @@ public class Place {
 
     public void setTool(Item tool) {
         this.tool = tool;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
