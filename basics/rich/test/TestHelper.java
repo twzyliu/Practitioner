@@ -6,6 +6,7 @@ public class TestHelper {
     public static final String ROLL_CMD = "roll";
     public static final String BLOCK_CMD = "block 1";
     public static final String FARAWAY_BLOCK_CMD = "block 20";
+    public static final String BOMB_CMD = "bomb 1";
     public static final String INIT_MONEY_CMD = "10000";
     public static final String YES = "Y";
     public static final String NO = "N";
