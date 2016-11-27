@@ -16,8 +16,10 @@ public class ChoseToolTwo implements Cmd{
     @Override
     public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
         Robot robot = player.getRobot();
-        player.setPoint(player.getPoint() - robot.getPoint());
-        robot.setNum(robot.getNum() + 1);
+        if (player.getPoint() >= robot.getPoint() && player.getToolsNum() < Player.MAX_ITEMS) {
+            player.setPoint(player.getPoint() - robot.getPoint());
+            robot.setNum(robot.getNum() + 1);
+        }
         return asList();
     }
 }

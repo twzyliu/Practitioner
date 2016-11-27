@@ -13,7 +13,6 @@ import java.util.List;
 public class ChoseGiftOne implements Cmd {
     @Override
     public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
-        GiftRoom giftRoom = (GiftRoom) player.getPlace();
         player.setMoney(player.getMoney() + GiftRoom.giftMoney);
         return initialCmdType;
     }

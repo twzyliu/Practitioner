@@ -4,6 +4,7 @@ import core.GameMap;
 import core.Player;
 import item.Block;
 import item.Bomb;
+import item.Item;
 import item.Robot;
 import org.junit.Before;
 import org.junit.Test;
@@ -101,6 +102,28 @@ public class RollCmdToolRoomTest {
 
         assertThat(player.getPoint(), is(point - bomb.getPoint()));
         assertThat(bomb.getNum(), is(num + 1));
+    }
+
+    @Test
+    public void should_not_change_when_no_enough_point_or_space_to_buy() throws Exception {
+        player.setPoint(Item.CHEAPEST);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        player.execute(cmd);
+        List<CmdType> availableCmdType = player.getAvailableCmdType();
+        int toolsNum = player.getToolsNum();
+
+        Optional<Cmd> choseOne = player.getAvailableCmd(TestHelper.CHOSE_ONE);
+        player.execute(choseOne);
+        assertThat(player.getAvailableCmdType(), is(availableCmdType));
+        assertThat(player.getToolsNum(), is(toolsNum));
+
+        player.setPoint(TestHelper.ENOUGH_POINT);
+        player.getBomb().setNum(Player.MAX_ITEMS);
+        int point = player.getPoint();
+        Optional<Cmd> choseThree = player.getAvailableCmd(TestHelper.CHOSE_THREE);
+        player.execute(choseThree);
+        assertThat(player.getAvailableCmdType(), is(availableCmdType));
+        assertThat(player.getPoint(), is(point));
     }
 }
 

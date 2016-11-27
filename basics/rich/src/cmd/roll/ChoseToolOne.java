@@ -12,12 +12,14 @@ import static java.util.Arrays.asList;
 /**
  * Created by zyongliu on 27/11/16.
  */
-public class ChoseToolOne implements Cmd{
+public class ChoseToolOne implements Cmd {
     @Override
     public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
         Block block = player.getBlock();
-        player.setPoint(player.getPoint() - block.getPoint());
-        block.setNum(block.getNum() + 1);
+        if (player.getPoint() >= block.getPoint() && player.getToolsNum() < Player.MAX_ITEMS) {
+            player.setPoint(player.getPoint() - block.getPoint());
+            block.setNum(block.getNum() + 1);
+        }
         return asList();
     }
 }

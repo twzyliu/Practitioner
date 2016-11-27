@@ -16,8 +16,10 @@ public class ChoseToolThree implements Cmd {
     @Override
     public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
         Bomb bomb = player.getBomb();
-        player.setPoint(player.getPoint() - bomb.getPoint());
-        bomb.setNum(bomb.getNum() + 1);
+        if (player.getPoint() >= bomb.getPoint() && player.getToolsNum() < Player.MAX_ITEMS) {
+            player.setPoint(player.getPoint() - bomb.getPoint());
+            bomb.setNum(bomb.getNum() + 1);
+        }
         return asList();
     }
 }

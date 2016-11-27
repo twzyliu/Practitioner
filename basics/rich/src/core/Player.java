@@ -18,6 +18,7 @@ import java.util.Optional;
  */
 public class Player {
 
+    public static final int MAX_ITEMS = 10;
     private List<CmdType> availableCmdType;
     private List<CmdType> initialCmdType;
     private GameMap gameMap;
