@@ -82,4 +82,16 @@ public class BombCmdTest {
         assertThat(player.getToolsNum(), is(toolsNum));
         assertThat(place.getPlayer() != null, is(true));
     }
+
+    @Test
+    public void should_not_change_when_target_faraway() throws Exception {
+        player.getBomb().setNum(TestHelper.ENOUGH_TOOLS);
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.FARAWAY_BOMB_CMD);
+        int toolsNum = player.getToolsNum();
+
+        player.execute(cmd);
+
+        assertThat(player.getToolsNum(), is(toolsNum));
+        assertNull(place.getTool());
+    }
 }
