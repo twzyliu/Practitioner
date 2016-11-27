@@ -13,4 +13,5 @@ public class TestHelper {
     public static final String CHOSE_ONE = "1";
     public static final String CHOSE_TWO = "2";
     public static final String CHOSE_THREE = "3";
+    public static final int LAND_POINT = 20;
 }

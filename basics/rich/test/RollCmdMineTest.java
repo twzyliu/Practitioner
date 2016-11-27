@@ -27,9 +27,10 @@ public class RollCmdMineTest {
     public void setUp() throws Exception {
         GameMap gameMap = mock(GameMap.class);
         player = new Player(gameMap, CMD_TYPES);
-        mine = new Mine();
+        mine = new Mine(TestHelper.LAND_POINT);
         when(gameMap.getPlace(anyInt())).thenReturn(mine);
     }
+
     @Test
     public void should_not_change_available_cmds_after_roll_to_mine() throws Exception {
         Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
@@ -38,5 +39,15 @@ public class RollCmdMineTest {
         player.execute(cmd);
 
         assertThat(player.getAvailableCmdType(), is(availableCmdType));
+    }
+
+    @Test
+    public void should_gain_point_when_roll_to_mine() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.ROLL_CMD);
+        int point = player.getPoint();
+
+        player.execute(cmd);
+
+        assertThat(player.getPoint(), is(point + mine.getPoint()));
     }
 }
