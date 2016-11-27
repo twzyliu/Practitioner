@@ -1,5 +1,8 @@
 package item;
 
+import core.Player;
+import place.Place;
+
 /**
  * Created by zyongliu on 27/11/16.
  */
@@ -21,5 +24,11 @@ public class Item {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public void use(Player player) {
+        num -= 1;
+        Place place = player.getPlace();
+        place.setTool(this);
     }
 }

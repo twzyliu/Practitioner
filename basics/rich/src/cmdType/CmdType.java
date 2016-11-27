@@ -1,6 +1,7 @@
 package cmdType;
 
 import cmd.Cmd;
+import cmdType.block.BlockCmdType;
 import cmdType.roll.*;
 
 import java.util.List;
@@ -31,8 +32,10 @@ public interface CmdType {
             new ChoseToolOneType(),
             new ChoseToolTwoType(),
             new ChoseToolThreeType(),
-            new ChoseToolExitType()
+            new ChoseToolExitType(),
+            new BlockCmdType()
     );
+
 
     Optional<Cmd> parse(String cmd);
 }
