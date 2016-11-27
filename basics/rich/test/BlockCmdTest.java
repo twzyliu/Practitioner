@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import static cmdType.CmdType.CMD_TYPES;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -51,5 +52,17 @@ public class BlockCmdTest {
         player.execute(cmd);
 
         assertThat(player.getToolsNum(), is(toolsNum - 1));
+        assertThat(place.getTool(), is(player.getBlock()));
+    }
+
+    @Test
+    public void should_not_change_when_no_tool_to_user() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.BLOCK_CMD);
+        int toolsNum = player.getToolsNum();
+
+        player.execute(cmd);
+
+        assertThat(player.getToolsNum(), is(toolsNum));
+        assertNull(place.getTool());
     }
 }
