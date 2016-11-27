@@ -3,6 +3,9 @@ package core;
 import cmd.Cmd;
 import cmd.WrongCmd;
 import cmdType.CmdType;
+import item.Block;
+import item.Bomb;
+import item.Robot;
 import place.Place;
 import place.Prison;
 
@@ -25,6 +28,9 @@ public class Player {
     private int godDays = 0;
     private int prisonDays = 0;
     private boolean isGameOver = false;
+    private Block block = new Block();
+    private Bomb bomb = new Bomb();
+    private Robot robot = new Robot();
 
     public Player(GameMap gameMap, List<CmdType> cmdTypes) {
         this.initialCmdType = cmdTypes;
@@ -103,5 +109,21 @@ public class Player {
 
     public void gotoPrison() {
         prisonDays = Prison.PRISON_DAYS;
+    }
+
+    public int getToolsNum() {
+        return block.getNum() + robot.getNum() + bomb.getNum();
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public Bomb getBomb() {
+        return bomb;
+    }
+
+    public Robot getRobot() {
+        return robot;
     }
 }
