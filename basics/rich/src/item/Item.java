@@ -33,4 +33,8 @@ public class Item {
             place.setTool(this);
         }
     }
+
+    public int work(Player player, int target, int hospitalPosition) {
+        return target;
+    }
 }

@@ -68,7 +68,7 @@ public class Player implements WithCommandCapability {
     }
 
     public Place move() {
-        position = getGameMap().move(position);
+        position = getGameMap().move(this, position);
         return getPlace();
     }
 
