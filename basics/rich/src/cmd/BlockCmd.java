@@ -2,6 +2,7 @@ package cmd;
 
 import cmdType.CmdType;
 import core.Player;
+import core.WithCommandCapability;
 import item.Block;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public class BlockCmd implements Cmd {
     private int step = 0;
 
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
+    public List<CmdType> execute(WithCommandCapability withCommandCapability, List<CmdType> initialCmdType) {
+        Player player = (Player) withCommandCapability;
         Block block = player.getBlock();
         block.use(player, step);
         return initialCmdType;

@@ -38,7 +38,8 @@ public interface CmdType {
             new SellCmdType(),
             new SelltoolCmdType(),
             new QueryCmdType(),
-            new HelpCmdType()
+            new HelpCmdType(),
+            new RichCmdType()
     );
 
 

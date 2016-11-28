@@ -2,6 +2,7 @@ package cmd;
 
 import cmdType.CmdType;
 import core.Player;
+import core.WithCommandCapability;
 import place.EmptyLand;
 import place.Place;
 
@@ -14,7 +15,8 @@ public class SellCmd implements Cmd {
     private int position = 0;
 
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
+    public List<CmdType> execute(WithCommandCapability withCommandCapability, List<CmdType> initialCmdType) {
+        Player player = (Player) withCommandCapability;
         Place place = player.getGameMap().getPlace(position);
         if (place instanceof EmptyLand && player.equals(((EmptyLand) place).getOwner())) {
             player.setMoney(player.getMoney() + ((EmptyLand) place).getSellPrice());

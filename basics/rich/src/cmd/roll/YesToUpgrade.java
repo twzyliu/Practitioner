@@ -3,6 +3,7 @@ package cmd.roll;
 import cmd.Cmd;
 import cmdType.CmdType;
 import core.Player;
+import core.WithCommandCapability;
 import place.EmptyLand;
 
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
  */
 public class YesToUpgrade implements Cmd {
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
+    public List<CmdType> execute(WithCommandCapability withCommandCapability, List<CmdType> initialCmdType) {
+        Player player = (Player) withCommandCapability;
         EmptyLand emptyLand = (EmptyLand) player.getPlace();
         int money = player.getMoney();
         int price = emptyLand.getPrice();

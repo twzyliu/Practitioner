@@ -2,6 +2,7 @@ package cmd;
 
 import cmdType.CmdType;
 import core.Player;
+import core.WithCommandCapability;
 import item.Robot;
 
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.List;
  */
 public class RobotCmd implements Cmd {
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
+    public List<CmdType> execute(WithCommandCapability withCommandCapability, List<CmdType> initialCmdType) {
+        Player player = (Player) withCommandCapability;
         Robot robot = player.getRobot();
         robot.use(player, 0);
         return initialCmdType;

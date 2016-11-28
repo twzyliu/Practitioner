@@ -19,7 +19,7 @@ import static java.util.Arrays.asList;
 /**
  * Created by zyongliu on 25/11/16.
  */
-public class Player {
+public class Player implements WithCommandCapability {
 
     public static final int MAX_ITEMS = 10;
     private List<CmdType> availableCmdType;
@@ -43,6 +43,7 @@ public class Player {
         this.gameMap = gameMap;
     }
 
+    @Override
     public Optional<Cmd> getAvailableCmd(String cmd) {
         try {
             return availableCmdType.stream().map(cmdType -> cmdType.parse(cmd)).filter(Optional::isPresent).findFirst().get();
@@ -51,11 +52,13 @@ public class Player {
         }
     }
 
+    @Override
     public void execute(Optional<Cmd> cmd) {
         List<CmdType> execute = cmd.get().execute(this, initialCmdType);
         this.availableCmdType = execute.size() > 0 ? execute : this.availableCmdType;
     }
 
+    @Override
     public List<CmdType> getAvailableCmdType() {
         return availableCmdType;
     }

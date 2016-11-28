@@ -2,6 +2,7 @@ package cmd;
 
 import cmdType.CmdType;
 import core.Player;
+import core.WithCommandCapability;
 import place.GiftRoom;
 
 import java.util.List;
@@ -14,7 +15,8 @@ import static java.util.Arrays.asList;
 public class WrongCmd implements Cmd {
 
     @Override
-    public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
+    public List<CmdType> execute(WithCommandCapability withCommandCapability, List<CmdType> initialCmdType) {
+        Player player = (Player) withCommandCapability;
         if (player.getPlace() instanceof GiftRoom) {
             return initialCmdType;
         } else {

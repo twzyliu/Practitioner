@@ -1,17 +1,16 @@
-package cmd.roll;
+package cmd;
 
-import cmd.Cmd;
 import cmdType.CmdType;
 import core.WithCommandCapability;
 
 import java.util.List;
 
 /**
- * Created by zyongliu on 25/11/16.
+ * Created by zyongliu on 28/11/16.
  */
-public class NoToBuy implements Cmd {
+public class InitPlayerCmd implements Cmd {
     @Override
     public List<CmdType> execute(WithCommandCapability player, List<CmdType> initialCmdType) {
-        return initialCmdType;
+        return null;
     }
 }

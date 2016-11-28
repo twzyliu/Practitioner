@@ -1,7 +1,7 @@
 package cmd;
 
 import cmdType.CmdType;
-import core.Player;
+import core.WithCommandCapability;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface Cmd {
 
-    List<CmdType> execute(Player player, List<CmdType> initialCmdType);
+    List<CmdType> execute(WithCommandCapability player, List<CmdType> initialCmdType);
 
 }
