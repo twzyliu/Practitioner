@@ -36,8 +36,11 @@ public interface CmdType {
             new BombCmdType(),
             new RobotCmdType(),
             new SellCmdType(),
-            new SelltoolCmdType()
+            new SelltoolCmdType(),
+            new QueryCmdType(),
+            new HelpCmdType()
     );
+
 
 
     Optional<Cmd> parse(String cmd);
