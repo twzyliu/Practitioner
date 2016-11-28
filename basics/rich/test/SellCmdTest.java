@@ -59,4 +59,16 @@ public class SellCmdTest {
         assertThat(emptyLand.getLevel(), is(0));
         assertNull(emptyLand.getOwner());
     }
+
+    @Test
+    public void should_not_change_when_no_land_to_sell() throws Exception {
+        Optional<Cmd> cmd = player.getAvailableCmd(TestHelper.SELL_CMD);
+        int landsNum = player.getLands().size();
+        int money = player.getMoney();
+
+        player.execute(cmd);
+
+        assertThat(player.getLands().size(), is(landsNum));
+        assertThat(player.getMoney(), is(money));
+    }
 }
