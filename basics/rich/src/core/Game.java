@@ -14,6 +14,7 @@ public class Game implements WithCommandCapability{
     private List<CmdType> availableCmdType;
     private List<CmdType> initialCmdType;
     private int initMoney;
+    private List<Integer> playerNums;
 
     public Game(List<CmdType> initialCmdType) {
         this.initialCmdType = initialCmdType;
@@ -42,5 +43,9 @@ public class Game implements WithCommandCapability{
 
     public void setInitMoney(int initMoney) {
         this.initMoney = initMoney;
+    }
+
+    public void setPlayerNums(List<Integer> playerNums) {
+        this.playerNums = playerNums;
     }
 }

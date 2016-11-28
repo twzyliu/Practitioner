@@ -42,4 +42,18 @@ public class RichCmdTest {
 
         assertThat(game.getAvailableCmdType() != availableCmdType, is(true));
     }
+
+    @Test
+    public void should_change_available_cmds_after_initial_players() throws Exception {
+        Optional<Cmd> cmd = game.getAvailableCmd(TestHelper.RICH_CMD);
+        game.execute(cmd);
+        Optional<Cmd> initMoneyCmd = game.getAvailableCmd(TestHelper.INIT_MONEY_CMD);
+        game.execute(initMoneyCmd);
+
+        List<CmdType> availableCmdType = game.getAvailableCmdType();
+        Optional<Cmd> initPlayerCmd = game.getAvailableCmd(TestHelper.INIT_PLAYER_CMD);
+        game.execute(initPlayerCmd);
+
+        assertThat(game.getAvailableCmdType() != availableCmdType, is(true));
+    }
 }

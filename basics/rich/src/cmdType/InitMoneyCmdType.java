@@ -18,7 +18,7 @@ public class InitMoneyCmdType implements CmdType {
             initMoney = Integer.parseInt(cmd);
             return Optional.of(new InitMoneyCmd().setInitMoney(initMoney));
         } catch (Exception e) {
-            return Optional.of(new RichCmd()) ;
+            return Optional.of(new RichCmd());
         }
     }
 }
