@@ -9,6 +9,8 @@ public class TestHelper {
     public static final String BOMB_CMD = "bomb 1";
     public static final String FARAWAY_BOMB_CMD = "bomb 20";
     public static final String ROBOT_CMD = "robot";
+    public static final String SELL_CMD = "sell 1";
+
     public static final String INIT_MONEY_CMD = "10000";
     public static final String YES = "Y";
     public static final String NO = "N";

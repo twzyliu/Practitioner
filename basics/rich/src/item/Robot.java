@@ -16,7 +16,7 @@ public class Robot extends Item {
     }
 
     @Override
-    public void use(Player player) {
+    public void use(Player player, int step) {
         if (num > 1) {
             num -= 1;
             GameMap gameMap = player.getGameMap();

@@ -26,8 +26,8 @@ public class Item {
         this.num = num;
     }
 
-    public void use(Player player) {
-        Place place = player.getPlace();
+    public void use(Player player, int step) {
+        Place place = player.getGameMap().getPlace(player.getPosition() + step);
         if (num > 1 && place.getPlayer() == null && place.getTool() == null) {
             num -= 1;
             place.setTool(this);

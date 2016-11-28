@@ -34,7 +34,8 @@ public interface CmdType {
             new ChoseToolExitType(),
             new BlockCmdType(),
             new BombCmdType(),
-            new RobotCmdType()
+            new RobotCmdType(),
+            new SellCmdType()
     );
 
 

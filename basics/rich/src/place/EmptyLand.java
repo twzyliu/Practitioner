@@ -61,4 +61,13 @@ public class EmptyLand extends Place {
     public int getBill() {
         return (int) ((getPrice() / 2) * pow(2, level));
     }
+
+    public int getSellPrice() {
+        return 2 * price * (level + 1);
+    }
+
+    public void beSelled() {
+        level = 0;
+        owner = null;
+    }
 }

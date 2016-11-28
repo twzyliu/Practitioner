@@ -14,16 +14,22 @@ import static java.util.Arrays.asList;
 public class BombCmdType implements CmdType {
 
     public static final String BOMB_CMD = "bomb ";
+    private int step = 0;
 
     @Override
     public Optional<Cmd> parse(String cmd) {
         if (cmd.toLowerCase().contains(BOMB_CMD) && checkCmd(cmd)) {
-            return Optional.of(new BombCmd());
+            return Optional.of(new BombCmd().setStep(step));
         }
         return Optional.empty();
     }
 
     public boolean checkCmd(String cmd) {
-        return (asList(cmd.split(" ")).size() == 2 && abs(Integer.parseInt(asList(cmd.split(" ")).get(1))) < 11);
+        try {
+            step = Integer.parseInt(asList(cmd.split(" ")).get(1));
+            return (asList(cmd.split(" ")).size() == 2 && abs(step) < 11);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -13,7 +13,7 @@ public class RobotCmd implements Cmd {
     @Override
     public List<CmdType> execute(Player player, List<CmdType> initialCmdType) {
         Robot robot = player.getRobot();
-        robot.use(player);
+        robot.use(player, 0);
         return initialCmdType;
     }
 }
