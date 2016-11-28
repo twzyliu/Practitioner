@@ -35,7 +35,8 @@ public interface CmdType {
             new BlockCmdType(),
             new BombCmdType(),
             new RobotCmdType(),
-            new SellCmdType()
+            new SellCmdType(),
+            new SelltoolCmdType()
     );
 
 

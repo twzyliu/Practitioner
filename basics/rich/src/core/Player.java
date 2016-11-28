@@ -5,6 +5,7 @@ import cmd.WrongCmd;
 import cmdType.CmdType;
 import item.Block;
 import item.Bomb;
+import item.Item;
 import item.Robot;
 import place.Place;
 import place.Prison;
@@ -12,6 +13,8 @@ import place.Prison;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by zyongliu on 25/11/16.
@@ -32,6 +35,7 @@ public class Player {
     private Block block = new Block();
     private Bomb bomb = new Bomb();
     private Robot robot = new Robot();
+    private List<Item> toolList = asList(block, robot, bomb);
 
     public Player(GameMap gameMap, List<CmdType> cmdTypes) {
         this.initialCmdType = cmdTypes;
@@ -130,5 +134,9 @@ public class Player {
 
     public int getPosition() {
         return position;
+    }
+
+    public Item getTool(int num) {
+        return toolList.get(num - 1);
     }
 }
