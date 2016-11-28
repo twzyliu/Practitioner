@@ -2,6 +2,7 @@ import cmdType.CmdType;
 import core.GameMap;
 import core.Player;
 import item.Block;
+import item.Bomb;
 import org.junit.Before;
 import org.junit.Test;
 import place.EmptyLand;
@@ -45,6 +46,18 @@ public class GameMapTest {
         player.move();
 
         assertThat(player.getPosition(), is(1));
+        assertNull(place.getTool());
+    }
+
+    @Test
+    public void should_goto_hospital_when_encounter_bomb() throws Exception {
+        Place place = places.get(1);
+        place.setTool(new Bomb());
+
+        player.move();
+
+        assertThat(player.getPosition(), is(gameMap.getHospitalPosition()));
+        assertThat(player.getHospitalDays(), is(Hospital.HOSPITAL_DAYS));
         assertNull(place.getTool());
     }
 }

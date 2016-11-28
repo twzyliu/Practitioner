@@ -7,6 +7,7 @@ import item.Block;
 import item.Bomb;
 import item.Item;
 import item.Robot;
+import place.Hospital;
 import place.Place;
 import place.Prison;
 
@@ -31,6 +32,7 @@ public class Player implements WithCommandCapability {
     private List<Place> lands = new ArrayList<>();
     private int godDays = 0;
     private int prisonDays = 0;
+    private int hospitalDays = 0;
     private boolean isGameOver = false;
     private Block block = new Block();
     private Bomb bomb = new Bomb();
@@ -141,5 +143,13 @@ public class Player implements WithCommandCapability {
 
     public Item getTool(int num) {
         return toolList.get(num - 1);
+    }
+
+    public int getHospitalDays() {
+        return hospitalDays;
+    }
+
+    public void gotoHospital() {
+        hospitalDays = Hospital.HOSPITAL_DAYS;
     }
 }

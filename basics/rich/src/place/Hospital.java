@@ -5,4 +5,5 @@ package place;
  */
 public class Hospital extends Place {
 
+    public static final int HOSPITAL_DAYS = 3;
 }
