@@ -26,4 +26,5 @@ public class TestHelper {
     public static final String CHOSE_THREE = "3";
     public static final int LAND_POINT = 20;
     public static final int TOOL_POINT = 50;
+    public static final String QUERY_CMD = "query";
 }
