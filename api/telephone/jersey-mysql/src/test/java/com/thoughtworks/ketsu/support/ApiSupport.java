@@ -5,6 +5,7 @@ import com.thoughtworks.ketsu.api.exception.IllegalArgumentExceptionMapper;
 import com.thoughtworks.ketsu.api.jersey.*;
 import com.thoughtworks.ketsu.domain.Cards;
 import com.thoughtworks.ketsu.domain.CurrentCard;
+import com.thoughtworks.ketsu.domain.Records;
 import com.thoughtworks.ketsu.util.Json;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.servlet.ServletRegistration;
@@ -57,6 +58,7 @@ public class ApiSupport {
 
     protected Cards cards = mock(Cards.class);
     protected CurrentCard currentCard = mock(CurrentCard.class);
+    protected Records records = mock(Records.class);
 
     @Before
     public void setUp() throws Exception {
@@ -79,6 +81,7 @@ public class ApiSupport {
                             protected void configure() {
                                 bind(cards).to(Cards.class);
                                 bind(currentCard).to(CurrentCard.class);
+                                bind(records).to(Records.class);
                             }
                         });
                 return application;

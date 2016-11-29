@@ -1,7 +1,6 @@
 package com.thoughtworks.ketsu.domain;
 
 import com.thoughtworks.ketsu.api.jersey.Routes;
-import com.thoughtworks.ketsu.infrastructure.records.Record;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,14 +8,13 @@ import java.util.Map;
 /**
  * Created by zyongliu on 29/11/16.
  */
-public class Card implements Record {
+public class Record implements com.thoughtworks.ketsu.infrastructure.records.Record{
     private String id;
-    private String number;
-    private Contract contract;
+    private Card card;
 
-    public Card(String id, String number) {
-        this.id = id;
-        this.number = number;
+
+    public Record(HashMap<String, Object> info) {
+        this.id = info.getOrDefault("id","").toString();
     }
 
     @Override
@@ -27,9 +25,8 @@ public class Card implements Record {
     @Override
     public Map<String, Object> toJson(Routes routes) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", id);
-        hashMap.put("number", number);
-        hashMap.put("url",routes.cardUrl(this));
+        hashMap.put("id",id);
+        hashMap.put("url",routes.recordUrl(this));
         return hashMap;
     }
 
@@ -37,11 +34,11 @@ public class Card implements Record {
         return id;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setCard(Card card) {
+        this.card = card;
     }
 
-    public Contract getContract() {
-        return contract;
+    public Card getCard() {
+        return card;
     }
 }
