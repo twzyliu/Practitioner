@@ -55,7 +55,6 @@ public class Api extends ResourceConfig {
         register(new AbstractBinder() {
             @Override
             protected void configure() {
-
             }
         });
     }

@@ -1,9 +1,15 @@
 package com.thoughtworks.ketsu.support;
 
+import com.thoughtworks.ketsu.api.CardApi;
+import com.thoughtworks.ketsu.api.exception.IllegalArgumentExceptionMapper;
+import com.thoughtworks.ketsu.api.jersey.*;
+import com.thoughtworks.ketsu.domain.Cards;
+import com.thoughtworks.ketsu.domain.CurrentCard;
 import com.thoughtworks.ketsu.util.Json;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -30,6 +36,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
+import static org.mockito.Mockito.mock;
+
 public class ApiSupport {
     JerseyTest test;
 
@@ -47,6 +55,9 @@ public class ApiSupport {
     private String serverUri;
     protected String token = "";
 
+    protected Cards cards = mock(Cards.class);
+    protected CurrentCard currentCard = mock(CurrentCard.class);
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -54,6 +65,22 @@ public class ApiSupport {
         test = new JerseyTest() {
             @Override
             protected Application configure() {
+                application = new ResourceConfig(CardApi.class)
+                        .packages("com.thoughtworks.ketsu.api")
+                        .register(RecordListWriter.class)
+                        .register(RecordWriter.class)
+                        .register(PageToJson.class)
+                        .register(RoutesFeature.class)
+                        .register(LoggingFilter.class)
+                        .register(CORSResponseFilter.class)
+                        .register(IllegalArgumentExceptionMapper.class)
+                        .register(new AbstractBinder() {
+                            @Override
+                            protected void configure() {
+                                bind(cards).to(Cards.class);
+                                bind(currentCard).to(CurrentCard.class);
+                            }
+                        });
                 return application;
             }
 

@@ -3,6 +3,6 @@ package com.thoughtworks.ketsu.domain;
 /**
  * Created by zyongliu on 29/11/16.
  */
-public interface Cards {
-    Card getCard(String cid);
+public interface CurrentCard {
+    public Card getCurrentCard();
 }
