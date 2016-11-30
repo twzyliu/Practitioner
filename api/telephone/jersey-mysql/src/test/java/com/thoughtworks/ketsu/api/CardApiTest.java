@@ -15,7 +15,6 @@ import static com.thoughtworks.ketsu.support.TestHelper.ID;
 import static com.thoughtworks.ketsu.support.TestHelper.otherCard;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**

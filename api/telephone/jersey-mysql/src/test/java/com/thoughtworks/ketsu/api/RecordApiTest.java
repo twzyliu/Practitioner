@@ -11,8 +11,11 @@ import org.junit.runner.RunWith;
 
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.thoughtworks.ketsu.support.TestHelper.ID;
+import static com.thoughtworks.ketsu.support.TestHelper.otherCard;
+import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
@@ -35,10 +38,13 @@ public class RecordApiTest extends ApiSupport {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id", "100");
         record = new Record(hashMap);
+        record.setCard(card);
+        List<Record> recordList = asList(record,record,record);
         when(cards.getCard(ID)).thenReturn(card);
         when(currentCard.getCurrentCard()).thenReturn(card);
         when(records.getRecord(anyString())).thenReturn(record);
         when(records.create(any())).thenReturn(record);
+        when(records.getAllRecords()).thenReturn(recordList);
     }
 
     @Test
@@ -47,5 +53,29 @@ public class RecordApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(201));
         assertThat(response.getLocation().toString().contains(record.getId()), is(true));
+    }
+
+    @Test
+    public void should_return_400_when_create_record_fail() throws Exception {
+        when(records.create(any())).thenReturn(null);
+        Response response = post("/cards/" + ID + "/records", new HashMap<>());
+
+        assertThat(response.getStatus(), is(400));
+    }
+
+    @Test
+    public void should_return_404_when_create_others_record() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
+
+        Response response = post("/cards/" + ID + "/records", new HashMap<>());
+
+        assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_200_when_get_records() throws Exception {
+        Response response = get("/cards/" + ID + "/records");
+
+        assertThat(response.getStatus(), is(200));
     }
 }
