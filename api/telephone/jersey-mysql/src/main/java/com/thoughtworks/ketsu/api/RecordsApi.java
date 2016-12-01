@@ -42,6 +42,11 @@ public class RecordsApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Record> getAllRecords(@Context Records records) {
-        return records.getAllRecords();
+        List<Record> recordList = records.getAllRecords();
+        if (recordList.isEmpty()) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return recordList;
     }
+
 }
