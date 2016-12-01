@@ -101,4 +101,12 @@ public class RecordApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(200));
     }
+
+    @Test
+    public void should_return_404_when_get_recoed_fail() throws Exception {
+        when(records.getRecord(anyString())).thenReturn(null);
+        Response response = get("/cards/" + ID + "/records/" + record.getId());
+
+        assertThat(response.getStatus(), is(404));
+    }
 }

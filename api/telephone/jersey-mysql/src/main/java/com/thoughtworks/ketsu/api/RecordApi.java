@@ -6,8 +6,10 @@ import com.thoughtworks.ketsu.domain.Records;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by zyongliu on 29/11/16.
@@ -24,7 +26,11 @@ public class RecordApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Record getRecord(@Context Records records) {
-        return records.getRecord(rid);
+        Record record = records.getRecord(rid);
+        if (record == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return record;
     }
 
 }
