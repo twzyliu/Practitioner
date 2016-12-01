@@ -86,4 +86,12 @@ public class RecordApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(404));
     }
+
+    @Test
+    public void should_return_404_when_get_others_records() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
+        Response response = get("/cards/" + ID + "/records");
+
+        assertThat(response.getStatus(), is(404));
+    }
 }

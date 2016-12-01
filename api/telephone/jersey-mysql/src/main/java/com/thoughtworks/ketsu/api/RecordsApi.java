@@ -41,9 +41,11 @@ public class RecordsApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Record> getAllRecords(@Context Records records) {
+    public List<Record> getAllRecords(@Context Records records,
+                                      @Context CurrentCard currentCard) {
+        Card current = currentCard.getCurrentCard();
         List<Record> recordList = records.getAllRecords();
-        if (recordList.isEmpty()) {
+        if (recordList.isEmpty() || !card.equals(current)) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return recordList;
