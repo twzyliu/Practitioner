@@ -39,7 +39,7 @@ public class RecordApiTest extends ApiSupport {
         hashMap.put("id", "100");
         record = new Record(hashMap);
         record.setCard(card);
-        List<Record> recordList = asList(record,record,record);
+        List<Record> recordList = asList(record, record, record);
         when(cards.getCard(ID)).thenReturn(card);
         when(currentCard.getCurrentCard()).thenReturn(card);
         when(records.getRecord(anyString())).thenReturn(record);
@@ -93,5 +93,12 @@ public class RecordApiTest extends ApiSupport {
         Response response = get("/cards/" + ID + "/records");
 
         assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_200_when_get_record() throws Exception {
+        Response response = get("/cards/" + ID + "/records/" + record.getId());
+
+        assertThat(response.getStatus(), is(200));
     }
 }

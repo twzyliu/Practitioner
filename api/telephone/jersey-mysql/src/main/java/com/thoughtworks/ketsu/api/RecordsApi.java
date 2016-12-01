@@ -51,4 +51,9 @@ public class RecordsApi {
         return recordList;
     }
 
+    @Path("{rid}")
+    public RecordApi recordApi(@PathParam("rid") String rid) {
+        return new RecordApi(card,rid);
+    }
+
 }
