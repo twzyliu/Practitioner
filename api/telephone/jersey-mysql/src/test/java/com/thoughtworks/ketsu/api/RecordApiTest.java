@@ -30,6 +30,7 @@ import static org.mockito.Mockito.when;
 public class RecordApiTest extends ApiSupport {
     private Card card;
     private Record record;
+    private List<Record> list;
 
     @Override
     @Before
@@ -40,12 +41,12 @@ public class RecordApiTest extends ApiSupport {
         hashMap.put("id", "100");
         record = new Record(hashMap);
         record.setCard(card);
-        List<Record> recordList = asList(record, record, record);
+        list = asList(record, record, record);
         when(cards.getCard(ID)).thenReturn(card);
         when(currentCard.getCurrentCard()).thenReturn(card);
         when(records.getRecord(anyString())).thenReturn(record);
         when(records.create(any())).thenReturn(record);
-        when(records.getAllRecords()).thenReturn(recordList);
+        when(records.getAllRecords()).thenReturn(list);
     }
 
     @Test
@@ -79,7 +80,7 @@ public class RecordApiTest extends ApiSupport {
         List<HashMap> recordsList = response.readEntity(List.class);
 
         assertThat(response.getStatus(), is(200));
-        assertThat(recordsList.size(), is(3));
+        assertThat(recordsList.size(), is(list.size()));
         assertThat(recordsList.get(0).getOrDefault("id",""), is(record.getId()));
     }
 

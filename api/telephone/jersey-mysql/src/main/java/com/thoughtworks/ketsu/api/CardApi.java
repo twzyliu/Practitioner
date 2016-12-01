@@ -51,5 +51,12 @@ public class CardApi {
         Card card = cards.getCard(cid);
         return new RecordsApi(card);
     }
+
+    @Path("bills")
+    public BillsApi billsApi(@PathParam("cid") String cid,
+                             @Context Cards cards) {
+        Card card = cards.getCard(cid);
+        return new BillsApi(card);
+    }
 }
 
