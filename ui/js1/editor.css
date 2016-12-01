@@ -1,0 +1,17 @@
+ul, li {
+    list-style-type: none;
+}
+
+.render{
+    text-align:center;
+    border: solid black 1px;
+    width: 300px;
+    height: 100px;
+    margin: 10px;
+}
+
+.edit{
+    width: 300px;
+    height: 100px;
+    margin: 10px;
+}
