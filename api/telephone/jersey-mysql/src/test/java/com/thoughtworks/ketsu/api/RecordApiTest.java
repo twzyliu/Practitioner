@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.ID;
 import static com.thoughtworks.ketsu.support.TestHelper.otherCard;
@@ -75,8 +76,11 @@ public class RecordApiTest extends ApiSupport {
     @Test
     public void should_return_200_when_get_records() throws Exception {
         Response response = get("/cards/" + ID + "/records");
+        List<HashMap> recordsList = response.readEntity(List.class);
 
         assertThat(response.getStatus(), is(200));
+        assertThat(recordsList.size(), is(3));
+        assertThat(recordsList.get(0).getOrDefault("id",""), is(record.getId()));
     }
 
     @Test
@@ -98,13 +102,24 @@ public class RecordApiTest extends ApiSupport {
     @Test
     public void should_return_200_when_get_record() throws Exception {
         Response response = get("/cards/" + ID + "/records/" + record.getId());
+        Map map = response.readEntity(Map.class);
 
         assertThat(response.getStatus(), is(200));
+        assertThat(map.getOrDefault("id", "").toString(), is(record.getId()));
+        assertThat(map.getOrDefault("url", "").toString().contains(record.getId()), is(true));
     }
 
     @Test
-    public void should_return_404_when_get_recoed_fail() throws Exception {
+    public void should_return_404_when_get_record_fail() throws Exception {
         when(records.getRecord(anyString())).thenReturn(null);
+        Response response = get("/cards/" + ID + "/records/" + record.getId());
+
+        assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_404_when_get_others_record() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
         Response response = get("/cards/" + ID + "/records/" + record.getId());
 
         assertThat(response.getStatus(), is(404));

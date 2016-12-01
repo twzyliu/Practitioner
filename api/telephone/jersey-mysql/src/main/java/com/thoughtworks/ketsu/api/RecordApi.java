@@ -1,6 +1,7 @@
 package com.thoughtworks.ketsu.api;
 
 import com.thoughtworks.ketsu.domain.Card;
+import com.thoughtworks.ketsu.domain.CurrentCard;
 import com.thoughtworks.ketsu.domain.Record;
 import com.thoughtworks.ketsu.domain.Records;
 
@@ -25,9 +26,11 @@ public class RecordApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Record getRecord(@Context Records records) {
+    public Record getRecord(@Context Records records,
+                            @Context CurrentCard currentCard) {
+        Card current = currentCard.getCurrentCard();
         Record record = records.getRecord(rid);
-        if (record == null) {
+        if (record == null || !card.equals(current)) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return record;
