@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.ID;
+import static com.thoughtworks.ketsu.support.TestHelper.otherCard;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
@@ -49,6 +50,14 @@ public class BalanceApiTest extends ApiSupport{
     @Test
     public void should_return_404_when_get_balance_fail() throws Exception {
         card.setBalance(null);
+        Response response = get("/cards/" + ID + "/balance");
+
+        assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_404_when_get_others_balance() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
         Response response = get("/cards/" + ID + "/balance");
 
         assertThat(response.getStatus(), is(404));

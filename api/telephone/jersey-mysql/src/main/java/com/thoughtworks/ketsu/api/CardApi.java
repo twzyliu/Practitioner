@@ -61,10 +61,12 @@ public class CardApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Balance getBalance(@PathParam("cid") String cid,
-                              @Context Cards cards) {
+                              @Context Cards cards,
+                              @Context CurrentCard currentCard) {
+        Card current = currentCard.getCurrentCard();
         Card card = cards.getCard(cid);
         Balance balance = card.getBalance();
-        if (balance == null) {
+        if (balance == null || !card.equals(current)) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return balance;
