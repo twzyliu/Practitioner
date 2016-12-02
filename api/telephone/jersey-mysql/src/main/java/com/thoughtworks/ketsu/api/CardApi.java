@@ -63,7 +63,11 @@ public class CardApi {
     public Balance getBalance(@PathParam("cid") String cid,
                               @Context Cards cards) {
         Card card = cards.getCard(cid);
-        return card.getBalance();
+        Balance balance = card.getBalance();
+        if (balance == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return balance;
     }
 }
 

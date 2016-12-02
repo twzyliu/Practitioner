@@ -45,4 +45,12 @@ public class BalanceApiTest extends ApiSupport{
         assertThat(map.getOrDefault("id", ""), is(balance.getId()));
         assertThat(map.getOrDefault("url", "").toString().contains(ID), is(true));
     }
+
+    @Test
+    public void should_return_404_when_get_balance_fail() throws Exception {
+        card.setBalance(null);
+        Response response = get("/cards/" + ID + "/balance");
+
+        assertThat(response.getStatus(), is(404));
+    }
 }
