@@ -88,6 +88,14 @@ public class BillApiTest extends ApiSupport{
 
         assertThat(response.getStatus(), is(404));
     }
+
+    @Test
+    public void should_return_404_when_get_others_bill() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
+        Response response = get("/cards/" + ID + "/bills/" + bill.getId());
+
+        assertThat(response.getStatus(), is(404));
+    }
 }
 
 

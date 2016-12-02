@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.api;
 import com.thoughtworks.ketsu.domain.Bill;
 import com.thoughtworks.ketsu.domain.Card;
 import com.thoughtworks.ketsu.domain.Cards;
+import com.thoughtworks.ketsu.domain.CurrentCard;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
@@ -25,9 +26,11 @@ public class BillApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Bill getBill(@Context Cards cards) {
+    public Bill getBill(@Context Cards cards,
+                        @Context CurrentCard currentCard) {
+        Card current = currentCard.getCurrentCard();
         Bill bill = cards.getBill(bid);
-        if (bill == null) {
+        if (bill == null || !card.equals(current)) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return bill;
