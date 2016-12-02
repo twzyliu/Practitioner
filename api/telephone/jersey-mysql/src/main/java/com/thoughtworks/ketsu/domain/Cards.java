@@ -9,4 +9,6 @@ public interface Cards {
     Card getCard(String cid);
 
     List<Bill> getAllBills(String id);
+
+    Bill getBill(String bid);
 }

@@ -12,8 +12,10 @@ import org.junit.runner.RunWith;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.ID;
+import static com.thoughtworks.ketsu.support.TestHelper.otherCard;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -40,6 +42,7 @@ public class BillApiTest extends ApiSupport{
         when(cards.getCard(ID)).thenReturn(card);
         when(currentCard.getCurrentCard()).thenReturn(card);
         when(cards.getAllBills(anyString())).thenReturn(billList);
+        when(cards.getBill(anyString())).thenReturn(bill);
     }
 
     @Test
@@ -48,7 +51,44 @@ public class BillApiTest extends ApiSupport{
         List<HashMap> billLists = response.readEntity(List.class);
 
         assertThat(response.getStatus(), is(200));
-        assertThat(billLists.size(), is(3));
+        assertThat(billLists.size(), is(billLists.size()));
         assertThat(billLists.get(0).getOrDefault("id",""), is(ID));
     }
+
+    @Test
+    public void should_return_404_when_get_bills_fails() throws Exception {
+        when(cards.getAllBills(anyString())).thenReturn(asList());
+        Response response = get("/cards/" + ID + "/bills");
+
+        assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_404_when_get_others_bills() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
+        Response response = get("/cards/" + ID + "/bills");
+
+        assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_200_when_get_bill() throws Exception {
+        Response response = get("/cards/" + ID + "/bills/" + bill.getId());
+        Map map = response.readEntity(Map.class);
+
+        assertThat(response.getStatus(), is(200));
+        assertThat(map.getOrDefault("id", ""), is(bill.getId()));
+        assertThat(map.getOrDefault("url", "").toString().contains(bill.getId()), is(true));
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
