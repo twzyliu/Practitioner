@@ -13,6 +13,7 @@ public class Card implements Record {
     private String id;
     private String number;
     private Contract contract;
+    private Balance balance;
 
     public Card(String id, String number) {
         this.id = id;
@@ -43,5 +44,13 @@ public class Card implements Record {
 
     public Contract getContract() {
         return contract;
+    }
+
+    public Balance getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Balance balance) {
+        this.balance = balance;
     }
 }

@@ -1,9 +1,6 @@
 package com.thoughtworks.ketsu.api;
 
-import com.thoughtworks.ketsu.domain.Card;
-import com.thoughtworks.ketsu.domain.Cards;
-import com.thoughtworks.ketsu.domain.Contract;
-import com.thoughtworks.ketsu.domain.CurrentCard;
+import com.thoughtworks.ketsu.domain.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -57,6 +54,16 @@ public class CardApi {
                              @Context Cards cards) {
         Card card = cards.getCard(cid);
         return new BillsApi(card);
+    }
+
+
+    @Path("balance")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Balance getBalance(@PathParam("cid") String cid,
+                              @Context Cards cards) {
+        Card card = cards.getCard(cid);
+        return card.getBalance();
     }
 }
 
