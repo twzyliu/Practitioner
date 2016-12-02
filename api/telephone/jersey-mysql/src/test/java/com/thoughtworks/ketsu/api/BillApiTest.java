@@ -80,6 +80,14 @@ public class BillApiTest extends ApiSupport{
         assertThat(map.getOrDefault("id", ""), is(bill.getId()));
         assertThat(map.getOrDefault("url", "").toString().contains(bill.getId()), is(true));
     }
+
+    @Test
+    public void should_return_404_when_get_bill_fail() throws Exception {
+        when(cards.getBill(anyString())).thenReturn(null);
+        Response response = get("/cards/" + ID + "/bills/" + bill.getId());
+
+        assertThat(response.getStatus(), is(404));
+    }
 }
 
 
