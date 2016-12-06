@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.thoughtworks.ketsu.support.TestHelper.ID;
+import static com.thoughtworks.ketsu.support.TestHelper.otherCard;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -70,6 +71,14 @@ public class PaymentApiTest extends ApiSupport {
     @Test
     public void should_return_404_when_get_payments_fail() throws Exception {
         when(cards.getAllPayments()).thenReturn(null);
+        Response response = get("/cards/" + ID + "/payments");
+
+        assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_404_when_get_others_payments() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
         Response response = get("/cards/" + ID + "/payments");
 
         assertThat(response.getStatus(), is(404));

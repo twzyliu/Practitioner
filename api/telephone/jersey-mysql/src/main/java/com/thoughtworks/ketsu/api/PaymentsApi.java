@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.api;
 import com.thoughtworks.ketsu.api.jersey.Routes;
 import com.thoughtworks.ketsu.domain.Card;
 import com.thoughtworks.ketsu.domain.Cards;
+import com.thoughtworks.ketsu.domain.CurrentCard;
 import com.thoughtworks.ketsu.domain.Payment;
 
 import javax.ws.rs.*;
@@ -38,9 +39,11 @@ public class PaymentsApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Payment> getAllPayments(@Context Cards cards) {
+    public List<Payment> getAllPayments(@Context Cards cards,
+                                        @Context CurrentCard currentCard) {
+        Card current = currentCard.getCurrentCard();
         List<Payment> paymentList = cards.getAllPayments();
-        if (paymentList == null) {
+        if (paymentList == null || !card.equals(current)) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return paymentList;
