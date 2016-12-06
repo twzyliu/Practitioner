@@ -1,5 +1,6 @@
 package com.thoughtworks.ketsu.domain;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,4 +12,6 @@ public interface Cards {
     List<Bill> getAllBills(String id);
 
     Bill getBill(String bid);
+
+    Payment createPayment(Card card, HashMap<String, Object> info);
 }

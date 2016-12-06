@@ -71,5 +71,14 @@ public class CardApi {
         }
         return balance;
     }
+
+
+    @Path("payments")
+    public PaymentsApi paymentsApi(@PathParam("cid") String cid,
+                                   @Context Cards cards) {
+        Card card = cards.getCard(cid);
+        return new PaymentsApi(card);
+    }
+
 }
 

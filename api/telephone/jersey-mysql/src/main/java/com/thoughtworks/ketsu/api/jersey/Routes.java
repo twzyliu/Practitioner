@@ -1,9 +1,6 @@
 package com.thoughtworks.ketsu.api.jersey;
 
-import com.thoughtworks.ketsu.domain.Balance;
-import com.thoughtworks.ketsu.domain.Bill;
-import com.thoughtworks.ketsu.domain.Card;
-import com.thoughtworks.ketsu.domain.Record;
+import com.thoughtworks.ketsu.domain.*;
 
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
@@ -35,5 +32,9 @@ public class Routes {
     public URI balanceUrl(Balance balance) {
         return URI.create(String.format("%scards/%s/balance", baseUri, balance.getCard().getId()));
 
+    }
+
+    public URI paymentUrl(Payment payment) {
+        return URI.create(String.format("%scards/%s/payments/%s", baseUri, payment.getCard().getId(), payment.getId()));
     }
 }
