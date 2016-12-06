@@ -104,4 +104,12 @@ public class PaymentApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(404));
     }
+
+    @Test
+    public void should_return_404_when_get_others_payment() throws Exception {
+        when(currentCard.getCurrentCard()).thenReturn(otherCard);
+        Response response = get("/cards/" + ID + "/payments/" + payment.getId());
+
+        assertThat(response.getStatus(), is(404));
+    }
 }
