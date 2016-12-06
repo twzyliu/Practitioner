@@ -40,6 +40,9 @@ public class PaymentsApi {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Payment> getAllPayments(@Context Cards cards) {
         List<Payment> paymentList = cards.getAllPayments();
+        if (paymentList == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
         return paymentList;
     }
 }

@@ -66,4 +66,12 @@ public class PaymentApiTest extends ApiSupport {
         assertThat(list.get(0).getOrDefault("id", "").toString(), is(payment.getId()));
         assertThat(list.get(0).getOrDefault("url", "").toString().contains(payment.getId()),is(true));
     }
+
+    @Test
+    public void should_return_404_when_get_payments_fail() throws Exception {
+        when(cards.getAllPayments()).thenReturn(null);
+        Response response = get("/cards/" + ID + "/payments");
+
+        assertThat(response.getStatus(), is(404));
+    }
 }
