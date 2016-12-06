@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.ID;
 import static com.thoughtworks.ketsu.support.TestHelper.otherCard;
@@ -19,6 +20,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -40,6 +42,7 @@ public class PaymentApiTest extends ApiSupport {
         when(currentCard.getCurrentCard()).thenReturn(card);
         when(cards.createPayment(any(), any())).thenReturn(payment);
         when(cards.getAllPayments()).thenReturn(payments);
+        when(cards.getPayment(anyString())).thenReturn(payment);
     }
 
     @Test
@@ -61,11 +64,11 @@ public class PaymentApiTest extends ApiSupport {
     @Test
     public void should_return_200_when_get_payments() throws Exception {
         Response response = get("/cards/" + ID + "/payments");
-        List<HashMap<String,Object>> list = response.readEntity(List.class);
+        List<HashMap<String, Object>> list = response.readEntity(List.class);
 
         assertThat(response.getStatus(), is(200));
         assertThat(list.get(0).getOrDefault("id", "").toString(), is(payment.getId()));
-        assertThat(list.get(0).getOrDefault("url", "").toString().contains(payment.getId()),is(true));
+        assertThat(list.get(0).getOrDefault("url", "").toString().contains(payment.getId()), is(true));
     }
 
     @Test
@@ -82,5 +85,15 @@ public class PaymentApiTest extends ApiSupport {
         Response response = get("/cards/" + ID + "/payments");
 
         assertThat(response.getStatus(), is(404));
+    }
+
+    @Test
+    public void should_return_200_when_get_payment_success() throws Exception {
+        Response response = get("/cards/" + ID + "/payments/" + payment.getId());
+        Map map = response.readEntity(Map.class);
+
+        assertThat(response.getStatus(), is(200));
+        assertThat(map.getOrDefault("id", "").toString(), is(payment.getId()));
+        assertThat(map.getOrDefault("url", "").toString().contains(payment.getId()), is(true));
     }
 }

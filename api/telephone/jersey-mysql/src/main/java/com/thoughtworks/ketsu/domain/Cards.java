@@ -16,4 +16,6 @@ public interface Cards {
     Payment createPayment(Card card, HashMap<String, Object> info);
 
     List<Payment> getAllPayments();
+
+    Payment getPayment(String pid);
 }

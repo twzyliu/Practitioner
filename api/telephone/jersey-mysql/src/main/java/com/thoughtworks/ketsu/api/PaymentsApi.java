@@ -48,4 +48,9 @@ public class PaymentsApi {
         }
         return paymentList;
     }
+
+    @Path("{pid}")
+    public PaymentApi paymentApi(@PathParam("pid") String pid) {
+        return new PaymentApi(pid, card);
+    }
 }
