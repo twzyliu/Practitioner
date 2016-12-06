@@ -44,4 +44,12 @@ public class PaymentApiTest extends ApiSupport{
         assertThat(response.getStatus(), is(200));
         assertThat(response.getLocation().toString().contains(payment.getId()), is(true));
     }
+
+    @Test
+    public void should_return_400_when_create_payment_fail() throws Exception {
+        when(cards.createPayment(any(), any())).thenReturn(null);
+        Response response = post("/cards/" + ID + "/payments", new HashMap<>());
+
+        assertThat(response.getStatus(), is(400));
+    }
 }

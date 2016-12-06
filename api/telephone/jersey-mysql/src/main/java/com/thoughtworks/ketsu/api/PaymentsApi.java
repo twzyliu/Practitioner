@@ -7,6 +7,7 @@ import com.thoughtworks.ketsu.domain.Payment;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,6 +31,9 @@ public class PaymentsApi {
                                   @Context Cards cards,
                                   @Context Routes routes) {
         Payment payment = cards.createPayment(card, info);
+        if (payment == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
         return Response.status(200).location(routes.paymentUrl(payment)).build();
     }
 }
