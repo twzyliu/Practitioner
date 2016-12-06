@@ -5,13 +5,12 @@ import com.thoughtworks.ketsu.domain.Card;
 import com.thoughtworks.ketsu.domain.Cards;
 import com.thoughtworks.ketsu.domain.Payment;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by zyongliu on 06/12/16.
@@ -34,6 +33,13 @@ public class PaymentsApi {
         if (payment == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        return Response.status(200).location(routes.paymentUrl(payment)).build();
+        return Response.status(201).location(routes.paymentUrl(payment)).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Payment> getAllPayments(@Context Cards cards) {
+        List<Payment> paymentList = cards.getAllPayments();
+        return paymentList;
     }
 }

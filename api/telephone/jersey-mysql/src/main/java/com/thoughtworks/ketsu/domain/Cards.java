@@ -14,4 +14,6 @@ public interface Cards {
     Bill getBill(String bid);
 
     Payment createPayment(Card card, HashMap<String, Object> info);
+
+    List<Payment> getAllPayments();
 }
