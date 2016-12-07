@@ -1,4 +1,4 @@
-package com.thoughtworks.ketsu.web;
+package com.thoughtworks.ketsu.api;
 
 import com.thoughtworks.ketsu.api.jersey.RoutesFeature;
 import com.thoughtworks.ketsu.domain.CurrentUser;

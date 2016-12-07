@@ -19,7 +19,6 @@ public abstract class TestHelper {
     public static long PRODUCT_ID_2 = 2;
     public static long REFUND_1 = 1;
 
-
     public static User user = new User(USERNAME_A);
     public static User otherUser = new User(USERNAME_B);
     public static Order order = new Order(REFUND_ORDERID_1, user);
@@ -33,6 +32,10 @@ public abstract class TestHelper {
     public static Product otherproduct = new Product(PRODUCT_ID_2, user);
     public static List<Product> productList = asList(product, otherproduct);
     public static Refund refund = new Refund(REFUND_1, refundOrder);
+
+    public static HashMap<String, Object> userInfo = new HashMap<String,Object>() {{
+        put("username", USERNAME_A);
+    }};
 
 
     public static Map<String, Object> deployment(String appName, String releaseId) {

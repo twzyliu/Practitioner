@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.Optional;
 
 /**
@@ -18,11 +19,11 @@ public class UsersApi {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(String username,
+    public Response create(HashMap<String,Object> info,
                            @Context Users users,
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
-        return users.create(username).map(u -> Response.status(201).location(routes.userUrl(Optional.of(u).get())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
+        return users.create(info).map(u -> Response.status(201).location(routes.userUrl(Optional.of(u).get())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
     }
 
     @Path("{uid}")

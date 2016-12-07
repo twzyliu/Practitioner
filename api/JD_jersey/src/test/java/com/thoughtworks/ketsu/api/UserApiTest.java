@@ -1,4 +1,4 @@
-package com.thoughtworks.ketsu.web;
+package com.thoughtworks.ketsu.api;
 
 import com.thoughtworks.ketsu.domain.CurrentUser;
 import com.thoughtworks.ketsu.domain.Users;
