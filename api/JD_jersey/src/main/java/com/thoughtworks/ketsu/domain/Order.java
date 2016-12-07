@@ -9,21 +9,25 @@ import java.util.Map;
 /**
  * Created by zyongliu on 23/11/16.
  */
-public class Order implements Record{
-    private long id;
-    private User user;
+public class Order implements Record {
+    private Integer id;
+    private Integer uid;
 
-    public Order(long id, User user) {
+    public Order(Integer id, Integer uid) {
         this.id = id;
-        this.user = user;
+        this.uid = uid;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     @Override

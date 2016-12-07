@@ -14,10 +14,6 @@ public class User implements Record {
     private Integer id;
     private String username;
 
-    public User(String username) {
-        this.username = username;
-    }
-
     public User(Integer id, String username) {
         this.id = id;
         this.username = username;
@@ -29,6 +25,10 @@ public class User implements Record {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

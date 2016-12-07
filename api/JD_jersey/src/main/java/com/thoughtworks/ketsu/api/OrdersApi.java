@@ -36,7 +36,7 @@ public class OrdersApi {
     }
 
     @Path("{oid}")
-    public OrderApi orderApi(@PathParam("oid") long oid,
+    public OrderApi orderApi(@PathParam("oid") Integer oid,
                              @Context Orders orders) {
         return orders.findByUidOid(user.getUsername(), oid).map(OrderApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
@@ -45,6 +45,6 @@ public class OrdersApi {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getOrders(@Context Orders orders,
                                  @Context CurrentUser currentUser) {
-        return currentUser.getCurrentUser().filter((c) -> (c.equals(user) && (orders.findAllByUid(user.getUsername()).size() > 0))).map((c) -> orders.findAllByUid(user.getUsername())).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter((c) -> (c.equals(user) && (orders.findAllByUid(user.getId()).size() > 0))).map((c) -> orders.findAllByUid(user.getId())).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }

@@ -10,10 +10,10 @@ import java.util.Optional;
 public interface Orders {
     Optional<Order> createOrder(User user, HashMap<String, Object> orderInfo);
 
-    Optional<Order> findByUidOid(String uid, long oid);
+    Optional<Order> findByUidOid(String uid, Integer oid);
 
-    List<Order> findAllByUid(String username);
+    List<Order> findAllByUid(Integer uid);
 
-    Payment getPayment();
+    Payment getPayment(Integer oid);
 
 }

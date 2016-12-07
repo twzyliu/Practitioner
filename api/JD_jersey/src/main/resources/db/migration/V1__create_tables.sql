@@ -2,3 +2,17 @@ CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL
 );
+
+
+CREATE TABLE orders (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  uid INT NOT NULL
+);
+
+CREATE TABLE payments (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  oid INT NOT NULL,
+  uid INT NOT NULL
+);
+
+INSERT INTO payments ( id, oid, uid ) VALUES ( 100, 100, 100 );

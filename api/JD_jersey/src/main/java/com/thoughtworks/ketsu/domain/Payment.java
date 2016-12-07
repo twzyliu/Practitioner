@@ -10,20 +10,27 @@ import java.util.Map;
  * Created by zyongliu on 23/11/16.
  */
 public class Payment implements Record {
-    private long id;
-    private Order order;
+    private Integer id;
+    private Integer oid;
+    private Integer uid;
 
-    public Payment(long id, Order order) {
+
+    public Payment(Integer id, Integer oid, Integer uid) {
         this.id = id;
-        this.order = order;
+        this.oid = oid;
+        this.uid = uid;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public Order getOrder() {
-        return order;
+    public Integer getOid() {
+        return oid;
+    }
+
+    public Integer getUid() {
+        return uid;
     }
 
     @Override

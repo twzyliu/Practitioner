@@ -7,4 +7,15 @@
         <result property="id" column="id"/>
         <result property="username" column="username"/>
     </resultMap>
+
+    <resultMap id="order" type="com.thoughtworks.ketsu.domain.Order">
+    <result property="id" column="id"/>
+    <result property="uid" column="uid"/>
+    </resultMap>
+
+    <resultMap id="payment" type="com.thoughtworks.ketsu.domain.Payment">
+    <result property="id" column="id"/>
+    <result property="uid" column="uid"/>
+    <result property="oid" column="oid"/>
+    </resultMap>
 </mapper>

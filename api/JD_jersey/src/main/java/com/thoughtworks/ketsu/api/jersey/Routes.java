@@ -18,7 +18,7 @@ public class Routes {
     }
 
     public URI orderUrl(Order order) {
-        return URI.create(String.format("%susers/%s/orders/%s", baseUri, order.getUser().getUsername(), order.getId()));
+        return URI.create(String.format("%susers/%s/orders/%s", baseUri, order.getUid(), order.getId()));
     }
 
     public URI refundOrderUrl(RefundOrder refundOrder) {
@@ -30,7 +30,7 @@ public class Routes {
     }
 
     public URI paymentUrl(Payment payment) {
-        return URI.create(String.format("%susers/%s/orders/%s/payment", baseUri, payment.getOrder().getUser().getUsername(), payment.getOrder().getId()));
+        return URI.create(String.format("%susers/%s/orders/%s/payment", baseUri, payment.getUid(), payment.getOid()));
     }
 
     public URI refundUrl(Refund refund) {

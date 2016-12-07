@@ -22,6 +22,7 @@ import static com.thoughtworks.ketsu.support.TestHelper.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -58,14 +59,14 @@ public class OrderApiTest extends JerseyTest {
         when(users.findById(any())).thenReturn(Optional.of(user));
         when(orders.createOrder(any(), any())).thenReturn(Optional.of(order));
         when(orders.findByUidOid(eq(user.getUsername()), eq(order.getId()))).thenReturn(Optional.of(order));
-        when(orders.findAllByUid(eq(user.getUsername()))).thenReturn(orderList);
-        when(orders.getPayment()).thenReturn(payment);
+        when(orders.findAllByUid(eq(user.getId()))).thenReturn(orderList);
+        when(orders.getPayment(anyInt())).thenReturn(payment);
         super.setUp();
     }
 
     @Test
     public void should_return_201_when_user_create_order_success() throws Exception {
-        Response response = target(String.format("/users/%s/orders", user.getUsername())).request().post(Entity.json(order));
+        Response response = target(String.format("/users/%s/orders", user.getId())).request().post(Entity.json(order));
 
         assertThat(response.getStatus(), is(201));
         assertThat(response.getLocation().toString().contains(order.getId() + ""), is(true));
@@ -74,7 +75,7 @@ public class OrderApiTest extends JerseyTest {
     @Test
     public void should_return_400_when_user_create_order_fail() throws Exception {
         when(orders.createOrder(any(), any())).thenReturn(Optional.empty());
-        Response response = target(String.format("/users/%s/orders", user.getUsername())).request().post(Entity.json(order));
+        Response response = target(String.format("/users/%s/orders", user.getId())).request().post(Entity.json(order));
 
         assertThat(response.getStatus(), is(400));
     }
@@ -82,14 +83,14 @@ public class OrderApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_other_create_my_order() throws Exception {
         when(currentUser.getCurrentUser()).thenReturn(Optional.of(otherUser));
-        Response response = target(String.format("/users/%s/orders", user.getUsername())).request().post(Entity.json(order));
+        Response response = target(String.format("/users/%s/orders", user.getId())).request().post(Entity.json(order));
 
         assertThat(response.getStatus(), is(404));
     }
 
     @Test
     public void should_return_200_when_user_get_his_order() throws Exception {
-        Response response = target(String.format("/users/%s/orders/%s", user.getUsername(), order.getId())).request().get();
+        Response response = target(String.format("/users/%s/orders/%s", user.getId(), order.getId())).request().get();
 
         assertThat(response.getStatus(), is(200));
         Map<String, Object> map = response.readEntity(Map.class);
@@ -100,7 +101,7 @@ public class OrderApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_can_not_find_order() throws Exception {
         when(orders.findByUidOid(eq(user.getUsername()), eq(order.getId()))).thenReturn(Optional.empty());
-        Response response = target(String.format("/users/%s/orders/%s", user.getUsername(), order.getId())).request().get();
+        Response response = target(String.format("/users/%s/orders/%s", user.getId(), order.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
     }
@@ -108,14 +109,14 @@ public class OrderApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_get_other_order() throws Exception {
         when(currentUser.getCurrentUser()).thenReturn(Optional.of(otherUser));
-        Response response = target(String.format("/users/%s/orders/%s", user.getUsername(), order.getId())).request().get();
+        Response response = target(String.format("/users/%s/orders/%s", user.getId(), order.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
     }
 
     @Test
     public void should_return_200_when_user_get_all_orders() throws Exception {
-        Response response = target(String.format("/users/%s/orders", user.getUsername())).request().get();
+        Response response = target(String.format("/users/%s/orders", user.getId())).request().get();
 
         assertThat(response.getStatus(), is(200));
         List<Map<String, Object>> maps = response.readEntity(List.class);
@@ -129,7 +130,7 @@ public class OrderApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_user_can_not_find_orders() throws Exception {
         when(orders.findAllByUid(any())).thenReturn(Collections.emptyList());
-        Response response = target(String.format("/users/%s/orders", user.getUsername())).request().get();
+        Response response = target(String.format("/users/%s/orders", user.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
     }
@@ -137,25 +138,25 @@ public class OrderApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_user_get_other_orders() throws Exception {
         when(currentUser.getCurrentUser()).thenReturn(Optional.of(otherUser));
-        Response response = target(String.format("/users/%s/orders", user.getUsername())).request().get();
+        Response response = target(String.format("/users/%s/orders", user.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
     }
 
     @Test
     public void should_return_200_when_user_get_payment() throws Exception {
-        Response response = target(String.format("/users/%s/orders/%s/payment", user.getUsername(), order.getId())).request().get();
+        Response response = target(String.format("/users/%s/orders/%s/payment", user.getId(), order.getId())).request().get();
 
         assertThat(response.getStatus(), is(200));
         Map<String, Object> map = response.readEntity(Map.class);
         assertThat(map.getOrDefault("id", "").toString(), is(payment.getId() + ""));
-        assertThat(map.getOrDefault("url", "").toString().contains(payment.getOrder().getId()+""), is(true));
+        assertThat(map.getOrDefault("url", "").toString().contains(payment.getOid()+""), is(true));
     }
 
     @Test
     public void should_return_404_when_can_not_find_payment() throws Exception {
-        when(orders.getPayment()).thenReturn(null);
-        Response response = target(String.format("/users/%s/orders/%s/payment", user.getUsername(), order.getId())).request().get();
+        when(orders.getPayment(anyInt())).thenReturn(null);
+        Response response = target(String.format("/users/%s/orders/%s/payment", user.getId(), order.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
 
@@ -164,7 +165,7 @@ public class OrderApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_user_get_other_users_payment() throws Exception {
         when(currentUser.getCurrentUser()).thenReturn(Optional.of(otherUser));
-        Response response = target(String.format("/users/%s/orders/%s/payment", user.getUsername(), order.getId())).request().get();
+        Response response = target(String.format("/users/%s/orders/%s/payment", user.getId(), order.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
     }
