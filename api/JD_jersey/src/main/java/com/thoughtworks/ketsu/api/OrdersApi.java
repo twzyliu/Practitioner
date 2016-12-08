@@ -30,7 +30,7 @@ public class OrdersApi {
                                 @Context Orders orders,
                                 @Context Routes routes,
                                 @Context CurrentUser currentUser) {
-        Optional<Order> order = orders.createOrder(user, orderInfo);
+        Optional<Order> order = orders.createOrder(user.getId(), orderInfo);
         currentUser.getCurrentUser().filter((c) -> (c.equals(user))).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
         return order.filter((o) -> o != null).map((o) -> Response.status(201).location(routes.orderUrl(order.get())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.BAD_REQUEST));
     }
@@ -38,7 +38,7 @@ public class OrdersApi {
     @Path("{oid}")
     public OrderApi orderApi(@PathParam("oid") Integer oid,
                              @Context Orders orders) {
-        return orders.findByUidOid(user.getUsername(), oid).map(OrderApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return orders.findByUidOid(user.getId(), oid).map(OrderApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET

@@ -3,19 +3,5 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="columns">
-    <sql id="users">
-        U.id as id,
-        U.name as userName,
-    </sql>
 
-    <sql id="orders">
-        O.id as id
-        O.uid as uid
-    </sql>
-
-    <sql id="payments">
-        P.id as id
-        P.uid as uid
-        P.oid as oid
-    </sql>
 </mapper>

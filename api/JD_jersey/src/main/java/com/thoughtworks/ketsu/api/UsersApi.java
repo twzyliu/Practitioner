@@ -27,7 +27,7 @@ public class UsersApi {
     }
 
     @Path("{uid}")
-    public UserApi userApi(@PathParam("uid") String uid,
+    public UserApi userApi(@PathParam("uid") Integer uid,
                            @Context Users users) {
         return users.findById(uid).map(UserApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }

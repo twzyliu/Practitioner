@@ -29,7 +29,7 @@ public class UserRepositoryTest {
 
     @Test
     public void should_return_user_when_find_by_id() throws Exception {
-        Optional<User> byId = userRepository.findById(userRepository.create(TestHelper.userInfo).get().getId() +"");
+        Optional<User> byId = userRepository.findById(userRepository.create(TestHelper.userInfo).get().getId());
         assertThat(byId.get().getUsername(), is(TestHelper.USERNAME_A));
     }
 }

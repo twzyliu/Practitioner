@@ -11,7 +11,7 @@ import java.util.List;
  * Created by zyongliu on 07/12/16.
  */
 public interface OrderMapper {
-    void createOrder(@Param("uid") String uid, @Param("info") HashMap<String, Object> orderInfo);
+    void createOrder(@Param("uid") Integer uid, @Param("info") HashMap<String, Object> orderInfo);
 
     Order findById(@Param("oid") Integer oid);
 

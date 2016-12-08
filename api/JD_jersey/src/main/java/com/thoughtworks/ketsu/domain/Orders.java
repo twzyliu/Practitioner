@@ -8,12 +8,11 @@ import java.util.Optional;
  * Created by zyongliu on 23/11/16.
  */
 public interface Orders {
-    Optional<Order> createOrder(User user, HashMap<String, Object> orderInfo);
+    Optional<Order> createOrder(Integer uid, HashMap<String, Object> orderInfo);
 
-    Optional<Order> findByUidOid(String uid, Integer oid);
+    Optional<Order> findByUidOid(Integer uid, Integer oid);
 
     List<Order> findAllByUid(Integer uid);
 
     Payment getPayment(Integer oid);
-
 }

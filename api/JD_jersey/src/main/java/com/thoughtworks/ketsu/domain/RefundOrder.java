@@ -10,20 +10,20 @@ import java.util.Map;
  * Created by zyongliu on 23/11/16.
  */
 public class RefundOrder implements Record {
-    private long id;
-    private User user;
+    private Integer id;
+    private Integer uid;
 
-    public RefundOrder(long id, User user) {
+    public RefundOrder(Integer id, Integer uid) {
         this.id = id;
-        this.user = user;
+        this.uid = uid;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUid() {
+        return uid;
     }
 
     @Override

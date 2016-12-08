@@ -39,20 +39,20 @@ public class OrderRepositoryTest {
 
     @Test
     public void should_return_order_when_create_order() throws Exception {
-        Optional<Order> order = orderRepository.createOrder(user, new HashMap<>());
+        Optional<Order> order = orderRepository.createOrder(user.getId(), new HashMap<>());
         assertThat(order.get().getUid(), is(user.getId()));
     }
 
     @Test
     public void should_return_order_when_find_by_uid_oid() throws Exception {
-        Optional<Order> order = orderRepository.createOrder(user, new HashMap<>());
-        Optional<Order> byUidOid = orderRepository.findByUidOid(user.getId().toString(), order.get().getId());
+        Optional<Order> order = orderRepository.createOrder(user.getId(), new HashMap<>());
+        Optional<Order> byUidOid = orderRepository.findByUidOid(user.getId(), order.get().getId());
         assertThat(byUidOid.get().getId(), is(order.get().getId()));
     }
 
     @Test
     public void should_return_orders_when_find_by_uid() throws Exception {
-        Optional<Order> order = orderRepository.createOrder(user, new HashMap<>());
+        Optional<Order> order = orderRepository.createOrder(user.getId(), new HashMap<>());
         List<Order> allByUid = orderRepository.findAllByUid(user.getId());
         assertThat(allByUid.isEmpty(), is(false));
         assertThat(allByUid.get(0).getId(), is(order.get().getId()));

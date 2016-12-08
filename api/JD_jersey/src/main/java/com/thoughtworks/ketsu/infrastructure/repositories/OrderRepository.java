@@ -3,7 +3,6 @@ package com.thoughtworks.ketsu.infrastructure.repositories;
 import com.thoughtworks.ketsu.domain.Order;
 import com.thoughtworks.ketsu.domain.Orders;
 import com.thoughtworks.ketsu.domain.Payment;
-import com.thoughtworks.ketsu.domain.User;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.OrderMapper;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.UserMapper;
 
@@ -23,13 +22,13 @@ public class OrderRepository implements Orders {
     UserMapper userMapper;
 
     @Override
-    public Optional<Order> createOrder(User user, HashMap<String, Object> orderInfo) {
-        orderMapper.createOrder(user.getId().toString(),orderInfo);
-        return findByUidOid(user.getId().toString(), Integer.parseInt(orderInfo.getOrDefault("id", "").toString()));
+    public Optional<Order> createOrder(Integer uid, HashMap<String, Object> orderInfo) {
+        orderMapper.createOrder(uid, orderInfo);
+        return findByUidOid(uid, Integer.parseInt(orderInfo.getOrDefault("id", "").toString()));
     }
 
     @Override
-    public Optional<Order> findByUidOid(String uid, Integer oid) {
+    public Optional<Order> findByUidOid(Integer uid, Integer oid) {
         Order order = orderMapper.findById(oid);
         order.setUid(userMapper.findById(uid).getId());
         return Optional.of(order);

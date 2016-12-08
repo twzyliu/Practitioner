@@ -11,5 +11,5 @@ import java.util.HashMap;
 public interface UserMapper {
     void createUser(@Param("info") HashMap<String, Object> info);
 
-    User findById(@Param("uid") String uid);
+    User findById(@Param("uid") Integer uid);
 }

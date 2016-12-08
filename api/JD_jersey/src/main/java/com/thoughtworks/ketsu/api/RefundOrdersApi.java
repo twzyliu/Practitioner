@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by zyongliu on 23/11/16.
@@ -30,20 +31,20 @@ public class RefundOrdersApi {
                            @Context RefundOrders refundOrders,
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
-        RefundOrder refundOrder = refundOrders.create(refundOrderInfo);
-        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrder != null))).map((c) -> Response.status(201).location(URI.create(routes.refundOrderUrl(refundOrder).toString())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        Optional<RefundOrder> refundOrder = refundOrders.create(user.getId(), refundOrderInfo);
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrder.isPresent()))).map((c) -> Response.status(201).location(URI.create(routes.refundOrderUrl(refundOrder.get()).toString())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<RefundOrder> getByUidRoid(@Context RefundOrders refundOrders,
                                           @Context CurrentUser currentUser) {
-        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrders.findAllRefundOrder().size() > 0))).map((c) -> refundOrders.findAllRefundOrder()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (refundOrders.findAllRefundOrder(user.getId()).size() > 0))).map((c) -> refundOrders.findAllRefundOrder(user.getId())).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("{roid}")
-    public RefundOrderApi refundOrderApi(@PathParam("roid") long roid,
+    public RefundOrderApi refundOrderApi(@PathParam("roid") Integer roid,
                                          @Context RefundOrders refundOrders) {
-        return refundOrders.findByUidRoid(user.getUsername(), roid).map(RefundOrderApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return refundOrders.findByUidRoid(user.getId(), roid).map(RefundOrderApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }

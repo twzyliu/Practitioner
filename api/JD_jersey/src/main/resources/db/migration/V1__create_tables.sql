@@ -15,4 +15,14 @@ CREATE TABLE payments (
   uid INT NOT NULL
 );
 
-INSERT INTO payments ( id, oid, uid ) VALUES ( 100, 100, 100 );
+CREATE TABLE refundorders (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  uid INT NOT NULL
+);
+
+CREATE TABLE refunds (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  uid INT NOT NULL,
+  roid INT NOT NULL
+);
+

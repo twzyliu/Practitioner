@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface Users {
     Optional<User> create(HashMap<String, Object> info);
 
-    Optional<User> findById(String uid);
+    Optional<User> findById(Integer uid);
 }

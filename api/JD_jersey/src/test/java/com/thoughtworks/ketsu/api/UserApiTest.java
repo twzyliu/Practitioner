@@ -73,7 +73,7 @@ public class UserApiTest extends JerseyTest {
 
     @Test
     public void should_return_200_when_user_get_his_info() throws Exception {
-        Response response = target("/users/" + USERNAME_A).request().get();
+        Response response = target("/users/" + user.getId()).request().get();
 
         assertThat(response.getStatus(), is(200));
         Map<String, Object> map = response.readEntity(Map.class);

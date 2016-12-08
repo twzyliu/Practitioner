@@ -24,7 +24,7 @@ public class RefundOrderApi {
     @Produces(MediaType.APPLICATION_JSON)
     public RefundOrder getRefundOrder(@Context Users users,
                                       @Context CurrentUser currentUser) {
-        return currentUser.getCurrentUser().filter((c) -> c.equals(refundOrder.getUser())).map((c) -> refundOrder).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter((c) -> c.getId().equals(refundOrder.getUid())).map((c) -> refundOrder).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("refund")
@@ -32,7 +32,7 @@ public class RefundOrderApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Refund getRefund(@Context RefundOrders refundOrders,
                             @Context CurrentUser currentUser) {
-        return currentUser.getCurrentUser().filter((c) -> (c.equals(refundOrder.getUser()) && (refundOrders.getRefund() != null))).map((c)-> refundOrders.getRefund()).orElseThrow(()-> new WebApplicationException(Response.Status.NOT_FOUND));
+        return currentUser.getCurrentUser().filter((c) -> (c.getId().equals(refundOrder.getUid()) && (refundOrders.findRefund(refundOrder.getId()) != null))).map((c)-> refundOrders.findRefund(refundOrder.getId())).orElseThrow(()-> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }
 

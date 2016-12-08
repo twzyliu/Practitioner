@@ -1,0 +1,1 @@
+INSERT INTO payments ( id, oid, uid ) VALUES ( 100, 100, 100 );

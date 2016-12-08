@@ -58,7 +58,7 @@ public class OrderApiTest extends JerseyTest {
         when(currentUser.getCurrentUser()).thenReturn(Optional.of(user));
         when(users.findById(any())).thenReturn(Optional.of(user));
         when(orders.createOrder(any(), any())).thenReturn(Optional.of(order));
-        when(orders.findByUidOid(eq(user.getUsername()), eq(order.getId()))).thenReturn(Optional.of(order));
+        when(orders.findByUidOid(eq(user.getId()), eq(order.getId()))).thenReturn(Optional.of(order));
         when(orders.findAllByUid(eq(user.getId()))).thenReturn(orderList);
         when(orders.getPayment(anyInt())).thenReturn(payment);
         super.setUp();
@@ -100,7 +100,7 @@ public class OrderApiTest extends JerseyTest {
 
     @Test
     public void should_return_404_when_can_not_find_order() throws Exception {
-        when(orders.findByUidOid(eq(user.getUsername()), eq(order.getId()))).thenReturn(Optional.empty());
+        when(orders.findByUidOid(eq(user.getId()), eq(order.getId()))).thenReturn(Optional.empty());
         Response response = target(String.format("/users/%s/orders/%s", user.getId(), order.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));

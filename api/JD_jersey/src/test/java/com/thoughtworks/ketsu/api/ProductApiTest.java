@@ -64,7 +64,7 @@ public class ProductApiTest extends JerseyTest {
 
     @Test
     public void should_return_201_when_user_creat_product() throws Exception {
-        Response response = target(String.format("/users/%s/products", user.getUsername())).request().post(Entity.json(product));
+        Response response = target(String.format("/users/%s/products", user.getId())).request().post(Entity.json(product));
 
         assertThat(response.getStatus(), is(201));
         assertThat(response.getLocation().toString().contains(product.getId() + ""), is(true));
@@ -73,7 +73,7 @@ public class ProductApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_user_creat_product_fail() throws Exception {
         when(products.create(any())).thenReturn(null);
-        Response response = target(String.format("/users/%s/products", user.getUsername())).request().post(Entity.json(product));
+        Response response = target(String.format("/users/%s/products", user.getId())).request().post(Entity.json(product));
 
         assertThat(response.getStatus(), is(404));
     }
@@ -81,14 +81,14 @@ public class ProductApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_other_creat_my_product() throws Exception {
         when(users.findById(any())).thenReturn(Optional.of(otherUser));
-        Response response = target(String.format("/users/%s/products", user.getUsername())).request().post(Entity.json(product));
+        Response response = target(String.format("/users/%s/products", user.getId())).request().post(Entity.json(product));
 
         assertThat(response.getStatus(), is(404));
     }
 
     @Test
     public void should_return_200_when_user_get_all_products() throws Exception {
-        Response response = target(String.format("/users/%s/products", user.getUsername())).request().get();
+        Response response = target(String.format("/users/%s/products", user.getId())).request().get();
 
         assertThat(response.getStatus(), is(200));
         List<Map<String, Object>> maps = response.readEntity(List.class);
@@ -102,14 +102,14 @@ public class ProductApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_user_no_products() throws Exception {
         when(products.findAllProducts()).thenReturn(Collections.emptyList());
-        Response response = target(String.format("/users/%s/products", user.getUsername())).request().get();
+        Response response = target(String.format("/users/%s/products", user.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
     }
 
     @Test
     public void should_return_200_when_user_get_product() throws Exception {
-        Response response = target(String.format("/users/%s/products/%s", user.getUsername(),product.getId())).request().get();
+        Response response = target(String.format("/users/%s/products/%s", user.getId(),product.getId())).request().get();
 
         assertThat(response.getStatus(), is(200));
         Map<String, Object> map = response.readEntity(Map.class);
@@ -120,7 +120,7 @@ public class ProductApiTest extends JerseyTest {
     @Test
     public void should_return_404_when_user_no_product() throws Exception {
         when(products.findProduct(eq(product.getId()))).thenReturn(Optional.empty());
-        Response response = target(String.format("/users/%s/products/%s", user.getUsername(),product.getId())).request().get();
+        Response response = target(String.format("/users/%s/products/%s", user.getId(),product.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));
     }

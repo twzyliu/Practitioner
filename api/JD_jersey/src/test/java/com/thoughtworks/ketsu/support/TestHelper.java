@@ -20,21 +20,21 @@ public abstract class TestHelper {
     public static Integer REFUND_1 = 1;
     public static Integer ORDER_ID = 100;
 
-    public static User user = new User(0,USERNAME_A);
-    public static User otherUser = new User(1,USERNAME_B);
+    public static User user = new User(0, USERNAME_A);
+    public static User otherUser = new User(1, USERNAME_B);
     public static Order order = new Order(REFUND_ORDERID_1, user.getId());
     public static Order otherOrder = new Order(ORDERID_2, user.getId());
     public static List<Order> orderList = asList(order, otherOrder);
     public static Payment payment = new Payment(ORDERID_1, order.getId(), user.getId());
-    public static RefundOrder refundOrder = new RefundOrder(REFUND_ORDERID_1, user);
-    public static RefundOrder otherRefundOrder = new RefundOrder(REFUND_ORDERID_2, user);
+    public static RefundOrder refundOrder = new RefundOrder(REFUND_ORDERID_1, user.getId());
+    public static RefundOrder otherRefundOrder = new RefundOrder(REFUND_ORDERID_2, user.getId());
     public static List<RefundOrder> refundOrderList = asList(refundOrder, otherRefundOrder);
     public static Product product = new Product(PRODUCT_ID_1, user);
     public static Product otherproduct = new Product(PRODUCT_ID_2, user);
     public static List<Product> productList = asList(product, otherproduct);
-    public static Refund refund = new Refund(REFUND_1, refundOrder);
+    public static Refund refund = new Refund(REFUND_1, refundOrder.getUid(), refundOrder.getId());
 
-    public static HashMap<String, Object> userInfo = new HashMap<String,Object>() {{
+    public static HashMap<String, Object> userInfo = new HashMap<String, Object>() {{
         put("username", USERNAME_A);
     }};
 

@@ -18,4 +18,15 @@
     <result property="uid" column="uid"/>
     <result property="oid" column="oid"/>
     </resultMap>
+
+    <resultMap id="refundorder" type="com.thoughtworks.ketsu.domain.RefundOrder">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+    </resultMap>
+
+    <resultMap id="refund" type="com.thoughtworks.ketsu.domain.Refund">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="roid" column="roid"/>
+    </resultMap>
 </mapper>

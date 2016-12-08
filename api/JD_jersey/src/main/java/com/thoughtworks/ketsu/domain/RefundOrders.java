@@ -8,11 +8,11 @@ import java.util.Optional;
  * Created by zyongliu on 23/11/16.
  */
 public interface RefundOrders {
-    RefundOrder create(HashMap<String, Object> refundOrderInfo);
+    Optional<RefundOrder> create(Integer uid, HashMap<String, Object> refundOrderInfo);
 
-    List<RefundOrder> findAllRefundOrder();
+    List<RefundOrder> findAllRefundOrder(Integer uid);
 
-    Optional<RefundOrder> findByUidRoid(String username, long roid);
+    Optional<RefundOrder> findByUidRoid(Integer uid, Integer roid);
 
-    Refund getRefund();
+    Refund findRefund(Integer oid);
 }

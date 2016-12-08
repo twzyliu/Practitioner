@@ -18,11 +18,11 @@ public class UserRepository implements Users {
     @Override
     public Optional<User> create(HashMap<String, Object> info) {
         userMapper.createUser(info);
-        return findById(info.getOrDefault("id", "").toString());
+        return findById(Integer.parseInt(info.getOrDefault("id", "").toString()));
     }
 
     @Override
-    public Optional<User> findById(String uid) {
+    public Optional<User> findById(Integer uid) {
         User user = userMapper.findById(uid);
         return Optional.of(user);
     }
