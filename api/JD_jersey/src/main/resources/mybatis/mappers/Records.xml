@@ -29,4 +29,9 @@
         <result property="uid" column="uid"/>
         <result property="roid" column="roid"/>
     </resultMap>
+
+    <resultMap id="product" type="com.thoughtworks.ketsu.domain.Product">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+    </resultMap>
 </mapper>

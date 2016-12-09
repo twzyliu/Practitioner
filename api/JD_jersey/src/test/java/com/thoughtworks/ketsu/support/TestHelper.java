@@ -19,6 +19,7 @@ public abstract class TestHelper {
     public static Integer PRODUCT_ID_2 = 2;
     public static Integer REFUND_1 = 1;
     public static Integer ORDER_ID = 100;
+    public static Integer REFUND_ID = 200;
 
     public static User user = new User(0, USERNAME_A);
     public static User otherUser = new User(1, USERNAME_B);
@@ -29,8 +30,8 @@ public abstract class TestHelper {
     public static RefundOrder refundOrder = new RefundOrder(REFUND_ORDERID_1, user.getId());
     public static RefundOrder otherRefundOrder = new RefundOrder(REFUND_ORDERID_2, user.getId());
     public static List<RefundOrder> refundOrderList = asList(refundOrder, otherRefundOrder);
-    public static Product product = new Product(PRODUCT_ID_1, user);
-    public static Product otherproduct = new Product(PRODUCT_ID_2, user);
+    public static Product product = new Product(PRODUCT_ID_1, user.getId());
+    public static Product otherproduct = new Product(PRODUCT_ID_2, user.getId());
     public static List<Product> productList = asList(product, otherproduct);
     public static Refund refund = new Refund(REFUND_1, refundOrder.getUid(), refundOrder.getId());
 

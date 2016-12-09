@@ -8,9 +8,9 @@ import java.util.Optional;
  * Created by zyongliu on 23/11/16.
  */
 public interface Products {
-    Product create(Map<String, Object> productInfo);
+    Optional<Product> create(Integer uid, Map<String, Object> productInfo);
 
-    List<Product> findAllProducts();
+    List<Product> findAllProducts(Integer uid);
 
-    Optional<Product> findProduct(long pid);
+    Optional<Product> findProduct(Integer pid);
 }

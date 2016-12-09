@@ -3,9 +3,11 @@ package com.thoughtworks.ketsu.infrastructure.records;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.thoughtworks.ketsu.domain.Orders;
+import com.thoughtworks.ketsu.domain.Products;
 import com.thoughtworks.ketsu.domain.RefundOrders;
 import com.thoughtworks.ketsu.domain.Users;
 import com.thoughtworks.ketsu.infrastructure.repositories.OrderRepository;
+import com.thoughtworks.ketsu.infrastructure.repositories.ProductRepository;
 import com.thoughtworks.ketsu.infrastructure.repositories.RefundOrderRepository;
 import com.thoughtworks.ketsu.infrastructure.repositories.UserRepository;
 import org.apache.ibatis.plugin.Interceptor;
@@ -58,6 +60,7 @@ public class Models extends AbstractModule {
         bind(Users.class).to(UserRepository.class);
         bind(Orders.class).to(OrderRepository.class);
         bind(RefundOrders.class).to(RefundOrderRepository.class);
+        bind(Products.class).to(ProductRepository.class);
     }
 
     private void bindPersistence() {

@@ -19,4 +19,10 @@
         WHERE R.uid = #{uid}
     </select>
 
+    <select id="findRefund" resultMap="records.refund">
+        SELECT *
+        FROM refunds
+        WHERE roid = #{roid}
+    </select>
+
 </mapper>

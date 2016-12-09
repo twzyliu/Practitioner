@@ -22,6 +22,7 @@ import static com.thoughtworks.ketsu.support.TestHelper.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -56,8 +57,8 @@ public class ProductApiTest extends JerseyTest {
         products = mock(Products.class);
         when(currentUser.getCurrentUser()).thenReturn(Optional.of(user));
         when(users.findById(any())).thenReturn(Optional.of(user));
-        when(products.create(any())).thenReturn(product);
-        when(products.findAllProducts()).thenReturn(productList);
+        when(products.create(anyInt(), any())).thenReturn(Optional.of(product));
+        when(products.findAllProducts(anyInt())).thenReturn(productList);
         when(products.findProduct(eq(product.getId()))).thenReturn(Optional.of(product));
         super.setUp();
     }
@@ -72,7 +73,7 @@ public class ProductApiTest extends JerseyTest {
 
     @Test
     public void should_return_404_when_user_creat_product_fail() throws Exception {
-        when(products.create(any())).thenReturn(null);
+        when(products.create(anyInt(), any())).thenReturn(null);
         Response response = target(String.format("/users/%s/products", user.getId())).request().post(Entity.json(product));
 
         assertThat(response.getStatus(), is(404));
@@ -101,7 +102,7 @@ public class ProductApiTest extends JerseyTest {
 
     @Test
     public void should_return_404_when_user_no_products() throws Exception {
-        when(products.findAllProducts()).thenReturn(Collections.emptyList());
+        when(products.findAllProducts(anyInt())).thenReturn(Collections.emptyList());
         Response response = target(String.format("/users/%s/products", user.getId())).request().get();
 
         assertThat(response.getStatus(), is(404));

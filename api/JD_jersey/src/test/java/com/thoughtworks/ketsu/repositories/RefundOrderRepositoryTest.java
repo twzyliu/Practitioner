@@ -60,8 +60,8 @@ public class RefundOrderRepositoryTest {
 
     @Test
     public void should_return_refund_when_find_by_id() throws Exception {
-        Refund refund = refundOrderRepository.findRefund(refundOrder.get().getId());
-        assertThat(refund.getRoid(), is(refundOrder.get().getId()));
+        Refund refund = refundOrderRepository.findRefund(TestHelper.REFUND_ID);
+        assertThat(refund.getRoid(), is(TestHelper.REFUND_ID));
     }
 
 }

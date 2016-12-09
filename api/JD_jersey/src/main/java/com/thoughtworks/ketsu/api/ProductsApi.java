@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by zyongliu on 23/11/16.
@@ -29,18 +30,18 @@ public class ProductsApi {
                            @Context Products products,
                            @Context Routes routes,
                            @Context CurrentUser currentUser) {
-        Product product = products.create(productInfo);
-        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (product != null))).map((c) -> Response.status(201).location(routes.productUrl(product)).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        Optional<Product> product = products.create(user.getId(), productInfo);
+        return currentUser.getCurrentUser().filter(c -> (c.equals(user) && (product != null))).map((c) -> Response.status(201).location(routes.productUrl(product.get())).build()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Product> getAllProducts(@Context Products products) {
-        return products.findAllProducts().stream().findFirst().map((p) -> products.findAllProducts()).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+        return products.findAllProducts(user.getId()).stream().findFirst().map((p) -> products.findAllProducts(user.getId())).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
     @Path("{pid}")
-    public ProductApi productApi(@PathParam("pid") long pid,
+    public ProductApi productApi(@PathParam("pid") Integer pid,
                                  @Context Products products) {
         return products.findProduct(pid).map(ProductApi::new).orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }

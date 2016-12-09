@@ -34,8 +34,8 @@ public class RefundOrderRepository implements RefundOrders {
     }
 
     @Override
-    public Refund findRefund(Integer oid) {
-        return refundOrderMapper.findRefund(oid);
+    public Refund findRefund(Integer roid) {
+        return refundOrderMapper.findRefund(roid);
     }
 
 }

@@ -26,7 +26,7 @@ public class Routes {
     }
 
     public URI productUrl(Product product) {
-        return URI.create(String.format("%susers/%s/products/%s", baseUri, product.getUser().getUsername(), product.getId()));
+        return URI.create(String.format("%susers/%s/products/%s", baseUri, product.getUid(), product.getId()));
     }
 
     public URI paymentUrl(Payment payment) {
