@@ -4,6 +4,8 @@
 public class SampleServiceImpl implements SampleService {
     @Override
     public String getNameById(String userId) {
-        return "hello " + userId;
+        String s = "hello " + userId;
+        System.out.print(s);
+        return s;
     }
 }
