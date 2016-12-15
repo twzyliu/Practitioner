@@ -1,0 +1,11 @@
+#drag {
+}
+
+#drop1, #drop2, #drop3 {
+    float: left;
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
