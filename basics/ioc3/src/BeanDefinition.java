@@ -5,6 +5,7 @@ public class BeanDefinition {
     private Object bean;
     private Class beanClass;
     private String beanClassName;
+    private PropertyValues propertyValues;
 
     public BeanDefinition() {
     }
@@ -28,5 +29,13 @@ public class BeanDefinition {
         } catch (Exception e) {
             System.err.print(e);
         }
+    }
+
+    public PropertyValues getPropertyValues() {
+        return propertyValues;
+    }
+
+    public void setPropertyValues(PropertyValues propertyValues) {
+        this.propertyValues = propertyValues;
     }
 }
