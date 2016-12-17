@@ -1,3 +1,7 @@
+package ioc.factory;
+
+import ioc.BeanDefinition;
+
 /**
  * Created by zyongliu on 16/12/16.
  */

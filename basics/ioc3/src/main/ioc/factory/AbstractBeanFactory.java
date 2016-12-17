@@ -1,3 +1,7 @@
+package ioc.factory;
+
+import ioc.BeanDefinition;
+
 import java.util.HashMap;
 
 /**

@@ -1,3 +1,5 @@
+package ioc;
+
 /**
  * Created by zyongliu on 16/12/16.
  */
@@ -27,7 +29,7 @@ public class BeanDefinition {
         try {
             this.beanClass = Class.forName(beanClassName);
         } catch (Exception e) {
-            System.err.print(e);
+            e.printStackTrace();
         }
     }
 

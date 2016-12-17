@@ -1,3 +1,8 @@
+package ioc.factory;
+
+import ioc.BeanDefinition;
+import ioc.PropertyValue;
+
 import java.lang.reflect.Field;
 
 /**
@@ -16,7 +21,7 @@ public class AutoWireBeanFactory extends AbstractBeanFactory {
             }
             return instance;
         } catch (Exception e) {
-            System.err.print(e);
+            e.printStackTrace();
         }
         return null;
     }

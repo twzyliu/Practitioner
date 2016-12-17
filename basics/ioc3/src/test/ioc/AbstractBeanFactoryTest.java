@@ -1,3 +1,6 @@
+package ioc;
+
+import ioc.factory.AutoWireBeanFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +12,6 @@ import static org.junit.Assert.assertThat;
  */
 public class AbstractBeanFactoryTest {
 
-    private static final String HELLO_WORLD_SERVICE = "helloWorldService";
     private AutoWireBeanFactory autoWireBeanFactory;
     private BeanDefinition beanDefinition;
     private PropertyValues propertyValues;
@@ -23,12 +25,12 @@ public class AbstractBeanFactoryTest {
 
     @Test
     public void should_register_and_get_bean() throws Exception {
-        beanDefinition.setBeanClassName("HelloWorldService");
-        propertyValues.add(new PropertyValue("words","Hello World"));
+        beanDefinition.setBeanClassName(TestHelper.BEAN_CLASS_NAME);
+        propertyValues.add(new PropertyValue(TestHelper.PROPERTY_NAME, TestHelper.PROPERTY_VALUE));
         beanDefinition.setPropertyValues(propertyValues);
-        autoWireBeanFactory.registerBeanDefinition(HELLO_WORLD_SERVICE, beanDefinition);
+        autoWireBeanFactory.registerBeanDefinition(TestHelper.SERVICE_NAME, beanDefinition);
 
-        HelloWorldService bean = (HelloWorldService) autoWireBeanFactory.getBean(HELLO_WORLD_SERVICE);
-        assertThat(bean.hello(), is("Hello World"));
+        HelloWorldService bean = (HelloWorldService) autoWireBeanFactory.getBean(TestHelper.SERVICE_NAME);
+        assertThat(bean.hello(), is(TestHelper.PROPERTY_VALUE));
     }
 }

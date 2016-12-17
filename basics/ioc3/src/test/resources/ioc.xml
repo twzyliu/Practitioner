@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <bean name="helloWorldService" class="ioc.HelloWorldService">
+        <property name="words" value="Hello World"></property>
+    </bean>
+</beans>
