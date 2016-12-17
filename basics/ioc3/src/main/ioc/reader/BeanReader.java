@@ -1,4 +1,4 @@
-package ioc;
+package ioc.reader;
 
 import org.dom4j.DocumentException;
 

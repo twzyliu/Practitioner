@@ -1,4 +1,6 @@
-package ioc;
+package ioc.reader;
+
+import ioc.BeanDefinition;
 
 import java.util.HashMap;
 

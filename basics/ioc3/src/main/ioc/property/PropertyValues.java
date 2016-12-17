@@ -1,4 +1,4 @@
-package ioc;
+package ioc.property;
 
 import java.util.ArrayList;
 import java.util.List;

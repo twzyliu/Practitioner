@@ -1,6 +1,8 @@
 package ioc;
 
 import ioc.factory.AutoWireBeanFactory;
+import ioc.property.PropertyValue;
+import ioc.property.PropertyValues;
 import org.junit.Before;
 import org.junit.Test;
 

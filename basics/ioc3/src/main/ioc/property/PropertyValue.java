@@ -1,4 +1,4 @@
-package ioc;
+package ioc.property;
 
 /**
  * Created by zyongliu on 16/12/16.

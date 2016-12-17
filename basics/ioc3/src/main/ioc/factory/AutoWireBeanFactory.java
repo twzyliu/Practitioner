@@ -1,7 +1,7 @@
 package ioc.factory;
 
 import ioc.BeanDefinition;
-import ioc.PropertyValue;
+import ioc.property.PropertyValue;
 
 import java.lang.reflect.Field;
 

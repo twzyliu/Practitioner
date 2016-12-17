@@ -1,5 +1,6 @@
 package ioc;
 
+import ioc.reader.XmlBeanReader;
 import org.junit.Test;
 
 import java.util.HashMap;
