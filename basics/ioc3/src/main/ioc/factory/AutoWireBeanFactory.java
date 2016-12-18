@@ -12,8 +12,10 @@ public class AutoWireBeanFactory extends AbstractBeanFactory {
 
     @Override
     protected Object createBean(BeanDefinition beanDefinition) {
+        //newInstance后立即setBean再处理property,解决循环依赖。
         try {
             Object instance = beanDefinition.getBeanClass().newInstance();
+            beanDefinition.setBean(instance);
             for (PropertyValue propertyValue : beanDefinition.getPropertyValues().getPropertyValueList()) {
                 Field declaredField = instance.getClass().getDeclaredField(propertyValue.getName());
                 declaredField.setAccessible(true);

@@ -9,6 +9,8 @@
         <property name="outputService" ref="outputService"></property>
     </bean>
 
-    <bean name="outputService" class="ioc.OutputService"/>
+    <bean name="outputService" class="ioc.OutputService">
+        <property name="hiService" ref="hiService"></property>
+    </bean>
 
 </beans>
