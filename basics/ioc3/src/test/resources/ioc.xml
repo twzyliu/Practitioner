@@ -3,4 +3,12 @@
     <bean name="helloWorldService" class="ioc.HelloWorldService">
         <property name="words" value="Hello World"></property>
     </bean>
+
+    <bean name="hiService" class="ioc.HiService">
+        <property name="name" value="andy"></property>
+        <property name="outputService" ref="outputService"></property>
+    </bean>
+
+    <bean name="outputService" class="ioc.OutputService"/>
+
 </beans>

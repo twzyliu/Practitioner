@@ -12,7 +12,16 @@ public abstract class AbstractBeanFactory implements BeanFactory {
 
     @Override
     public Object getBean(String name) {
-        return beanDefinitionHashMap.getOrDefault(name, null).getBean();
+        BeanDefinition beanDefinition = beanDefinitionHashMap.getOrDefault(name, null);
+        Object bean = beanDefinition.getBean();
+        if (bean == null) {
+            bean = createBean(beanDefinition);
+        }
+        return bean;
+    }
+
+    public void setBeanDefinitionHashMap(HashMap<String, BeanDefinition> beanDefinitionHashMap) {
+        this.beanDefinitionHashMap = beanDefinitionHashMap;
     }
 
     @Override

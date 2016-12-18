@@ -26,13 +26,21 @@ public class BeanDefinition {
         this.bean = bean;
     }
 
-    public void setBeanClassName(String beanClassName) {
+    public void setBeanClassAndName(String beanClassName) {
         this.beanClassName = beanClassName;
         try {
             this.beanClass = Class.forName(beanClassName);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setBeanClassName(String beanClassName) {
+        this.beanClassName = beanClassName;
+    }
+
+    public String getBeanClassName() {
+        return beanClassName;
     }
 
     public PropertyValues getPropertyValues() {

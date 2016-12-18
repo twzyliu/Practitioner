@@ -27,7 +27,7 @@ public class AbstractBeanFactoryTest {
 
     @Test
     public void should_register_and_get_bean() throws Exception {
-        beanDefinition.setBeanClassName(TestHelper.BEAN_CLASS_NAME);
+        beanDefinition.setBeanClassAndName(TestHelper.BEAN_CLASS_NAME);
         propertyValues.add(new PropertyValue(TestHelper.PROPERTY_NAME, TestHelper.PROPERTY_VALUE));
         beanDefinition.setPropertyValues(propertyValues);
         autoWireBeanFactory.registerBeanDefinition(TestHelper.SERVICE_NAME, beanDefinition);

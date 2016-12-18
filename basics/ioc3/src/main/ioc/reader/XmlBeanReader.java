@@ -24,17 +24,24 @@ public class XmlBeanReader extends AbstractBeanReader {
         while (beanIterator.hasNext()) {
             BeanDefinition beanDefinition = new BeanDefinition();
             HashMap<String, String> beanAttributeHashMap = new HashMap<>();
-            HashMap<String, String> propertyAttributeHashMap = new HashMap<>();
             PropertyValues propertyValues = new PropertyValues();
-
             Element beanElement = getAttribute(beanIterator, beanAttributeHashMap);
             Iterator propertyIterator = beanElement.elementIterator();
-            getAttribute(propertyIterator, propertyAttributeHashMap);
-
-            PropertyValue propertyValue = new PropertyValue(propertyAttributeHashMap.getOrDefault("name", null), propertyAttributeHashMap.getOrDefault("value", null));
-            propertyValues.add(propertyValue);
+            while (propertyIterator.hasNext()) {
+                HashMap<String, String> propertyAttributeHashMap = new HashMap<>();
+                getAttribute(propertyIterator, propertyAttributeHashMap);
+                Object value = propertyAttributeHashMap.getOrDefault("value", null);
+                String ref = propertyAttributeHashMap.getOrDefault("ref", null);
+                if (value == null && ref != null) {
+                    BeanDefinition beanProperty = new BeanDefinition();
+                    beanProperty.setBeanClassName(ref);
+                    value = beanProperty;
+                }
+                PropertyValue propertyValue = new PropertyValue(propertyAttributeHashMap.getOrDefault("name", null), value);
+                propertyValues.add(propertyValue);
+            }
             beanDefinition.setPropertyValues(propertyValues);
-            beanDefinition.setBeanClassName(beanAttributeHashMap.getOrDefault("class", null));
+            beanDefinition.setBeanClassAndName(beanAttributeHashMap.getOrDefault("class", null));
             getBeanHashMap().put(beanAttributeHashMap.getOrDefault("name", null), beanDefinition);
         }
     }

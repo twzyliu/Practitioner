@@ -17,7 +17,11 @@ public class AutoWireBeanFactory extends AbstractBeanFactory {
             for (PropertyValue propertyValue : beanDefinition.getPropertyValues().getPropertyValueList()) {
                 Field declaredField = instance.getClass().getDeclaredField(propertyValue.getName());
                 declaredField.setAccessible(true);
-                declaredField.set(instance, propertyValue.getValue());
+                Object value = propertyValue.getValue();
+                if (value instanceof BeanDefinition) {
+                    value = getBean(((BeanDefinition)value).getBeanClassName());
+                }
+                declaredField.set(instance, value);
             }
             return instance;
         } catch (Exception e) {
