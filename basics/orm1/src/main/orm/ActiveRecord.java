@@ -133,6 +133,54 @@ public class ActiveRecord {
         }
         return true;
     }
+
+    public boolean update() throws SQLException, IllegalAccessException {
+        init();
+        try {
+            String sql = "update " + table + " set ";
+            int idCount = 0;
+            for (int i = 0; i < fields.length; i++) {
+                Field field = fields[i];
+                field.setAccessible(true);
+                String tmp = "";
+                if (field.isAnnotationPresent(Column.class)) {
+                    if (!field.isAnnotationPresent(Id.class)) {
+                        sql += getColumnName(field) + "=";
+                        boolean isString = field.getType() == String.class;
+                        if (isString) {
+                            tmp += "";
+                        }
+                        try {
+                            tmp += field.get(this).toString();
+                            sql += tmp;
+                        } catch (Exception e) {
+                            sql += "null";
+                            if (i < fields.length - 1) {
+                                sql += ", ";
+                            }
+                            continue;
+                        }
+                        if (isString) {
+                            sql += "'";
+                        }
+                        sql += ",";
+                    } else {
+                        if ((int) field.get(this) == 0) {
+                            idCount = i;
+                            throw new RuntimeException("Object instance has no id set, or is set to 0");
+                        }
+                    }
+                }
+            }
+            statement.executeUpdate(String.valueOf(new StringBuilder(sql).deleteCharAt(sql.length() - 1).append(" where " + this.id + "=" + fields[idCount].get(this))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+
+
 }
 
 
