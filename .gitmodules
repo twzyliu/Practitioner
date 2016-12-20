@@ -1,0 +1,9 @@
+[submodule "basics/RichMan_Java_Function"]
+	path = basics/RichMan_Java_Function
+	url = https://github.com/twzyliu/RichMan_Java_Function
+[submodule "basics/RichMan_Java_Mechanism"]
+	path = basics/RichMan_Java_Mechanism
+	url = https://github.com/twzyliu/RichMan_Java_Mechanism
+[submodule "basics/RichMan_Ruby_Mechanism"]
+	path = basics/RichMan_Ruby_Mechanism
+	url = https://github.com/twzyliu/RichMan_Ruby_Mechanism
