@@ -69,10 +69,10 @@ public class ActiveRecord {
         return object;
     }
 
-    private <T extends ActiveRecord> T getById() throws SQLException, IllegalAccessException, InstantiationException {
+    private <T extends ActiveRecord> T getById(int id) throws SQLException, IllegalAccessException, InstantiationException {
         init();
         try {
-            ResultSet resultSet = statement.executeQuery("select * from " + table + " where id=" + id);
+            ResultSet resultSet = statement.executeQuery("select * from " + table + " where " + this.id + "=" + id);
             return (T) getObject(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,6 +117,17 @@ public class ActiveRecord {
             ResultSet keys = statement.getGeneratedKeys();
             keys.next();
             fields[idCount].set(this, keys.getInt(1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private boolean delById(int id) throws SQLException {
+        init();
+        try {
+            String sql = "delete from " + table + " where " + this.id + "=" + id;
+            statement.execute(sql);
         } catch (Exception e) {
             e.printStackTrace();
         }
