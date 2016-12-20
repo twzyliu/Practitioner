@@ -3,6 +3,7 @@ package main.orm;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by zyongliu on 20/12/16.
@@ -28,7 +29,12 @@ public class ActiveRecord {
 
     private String getColumnName(Field f) {
         String column = f.getAnnotation(Column.class).column();
-        return column.isEmpty()? f.getName():column;
+        return column.isEmpty() ? f.getName() : column;
+    }
+
+    private <T extends ActiveRecord> List<T> getAll() {
+        init();
+        return null;
     }
 
 }
