@@ -79,6 +79,49 @@ public class ActiveRecord {
         }
         return null;
     }
+
+    public boolean insert() throws SQLException, IllegalAccessException {
+        init();
+        try {
+
+            String sql = "insert into " + table + " values(";
+            int idCount = 0;
+            for (int i = 0; i < fields.length; i++) {
+                Field field = fields[i];
+                field.setAccessible(true);
+                String tmp = "";
+                if (field.isAnnotationPresent(Column.class)) {
+                    if (!field.isAnnotationPresent(Id.class)) {
+                        boolean isString = field.getType() == String.class;
+                        if (isString) {
+                            tmp += "'";
+                        }
+                        try {
+                            tmp += field.get(this).toString();
+                            sql += tmp;
+                        } catch (Exception e) {
+                            sql += "null,";
+                            continue;
+                        }
+                        if (isString) {
+                            sql += "'";
+                        }
+                    } else {
+                        idCount = i;
+                        sql += "null";
+                    }
+                    sql += ",";
+                }
+            }
+            statement.executeUpdate(new StringBuilder(sql).deleteCharAt(sql.length() - 1).append(")").toString(), Statement.RETURN_GENERATED_KEYS);
+            ResultSet keys = statement.getGeneratedKeys();
+            keys.next();
+            fields[idCount].set(this, keys.getInt(1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 }
 
 
