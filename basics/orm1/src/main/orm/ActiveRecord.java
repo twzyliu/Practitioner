@@ -179,7 +179,22 @@ public class ActiveRecord {
         return true;
     }
 
-
+    public boolean delete() throws SQLException, IllegalAccessException {
+        init();
+        try {
+            String sql = "delete from " + table + " where " + this.id + "=";
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(Id.class) && field.isAnnotationPresent(Column.class)) {
+                    field.setAccessible(true);
+                    sql += field.get(this);
+                }
+            }
+            statement.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
 }
 
