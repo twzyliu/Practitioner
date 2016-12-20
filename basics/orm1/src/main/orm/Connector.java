@@ -1,4 +1,4 @@
-package main.orm;
+package orm;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ public class Connector {
     public Connection getConnection() {
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/persistance", "root", "");
+                connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/orm", "root", "");
             } catch (Exception e) {
                 e.printStackTrace();
             }
