@@ -40,29 +40,44 @@ public class ActiveRecord {
         try {
             ResultSet resultSet = statement.executeQuery("select * from " + table);
             while (resultSet.next()) {
-                Object object = aClass.newInstance();
-                for (Field field : fields) {
-                    if (field.isAnnotationPresent(Column.class)) {
-                        String column = field.getAnnotation(Column.class).column();
-                        field.setAccessible(true);
-                        String columnLabel = column.isEmpty() ? field.getName() : column;
-                        if (field.getType() == byte.class) {
-                            byte aByte = resultSet.getByte(columnLabel);
-                            field.set(object, aByte);
-                        } else if (field.getType() == short.class) {
-                            short aShort = resultSet.getShort(columnLabel);
-                            field.set(object, aShort);
-                        } else {
-                            field.set(object, resultSet.getObject(columnLabel, field.getType()));
-                        }
-                    }
-                }
-                out.add((T) object);
+                out.add((T) getObject(resultSet));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return out;
+    }
+
+    private Object getObject(ResultSet resultSet) throws InstantiationException, IllegalAccessException, SQLException {
+        Object object = aClass.newInstance();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(Column.class)) {
+                String column = field.getAnnotation(Column.class).column();
+                field.setAccessible(true);
+                String columnLabel = column.isEmpty() ? field.getName() : column;
+                if (field.getType() == byte.class) {
+                    byte aByte = resultSet.getByte(columnLabel);
+                    field.set(object, aByte);
+                } else if (field.getType() == short.class) {
+                    short aShort = resultSet.getShort(columnLabel);
+                    field.set(object, aShort);
+                } else {
+                    field.set(object, resultSet.getObject(columnLabel, field.getType()));
+                }
+            }
+        }
+        return object;
+    }
+
+    private <T extends ActiveRecord> T getById() throws SQLException, IllegalAccessException, InstantiationException {
+        init();
+        try {
+            ResultSet resultSet = statement.executeQuery("select * from " + table + " where id=" + id);
+            return (T) getObject(resultSet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
